@@ -1,0 +1,39 @@
+.navbar{
+    color: white;
+    .container{
+        padding:  0px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+        .title{
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: crimson;
+            margin-left: 0.5rem;
+            align-self: flex-end;
+        }
+        .left{
+            display: flex;
+            align-items: center;
+            img{
+                height: 50px;
+            }
+            span{
+                margin-right: 20px;
+                cursor: pointer;
+            }
+        }
+        .right{
+            display: flex;
+            align-items: center;
+            img{
+                height: 35px;
+                width:35px;
+                border-radius: 5px;
+                object-fit: cover;
+                cursor: pointer;
+            }
+        }
+    }
+}
