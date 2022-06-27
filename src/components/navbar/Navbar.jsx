@@ -1,6 +1,7 @@
 import { Search, ArrowDropDown } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./navbar.scss";
 
 const Navbar = () => {
@@ -19,9 +20,15 @@ const Navbar = () => {
             alt=""
           />
           <span className="title">Movie Mania</span>
-          <span>Homepage</span>
-          <span>Series</span>
-          <span>Movies</span>
+          <NavLink to="/" className="link">
+            <span>Home page</span>
+          </NavLink>
+          <NavLink to="/series" className="link">
+            <span>Series</span>
+          </NavLink>
+          <NavLink to="/movies" className="link">
+            <span>Movies</span>
+          </NavLink>
           <span>New and Popular</span>
           <span>My List</span>
         </div>
