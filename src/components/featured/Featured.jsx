@@ -8,10 +8,7 @@ const Featured = ({ type }) => {
         <div className="category">
           <span>{type === "movies" ? "Movies" : "Series"}</span>
 
-          <select name="genre" id="">
-            <option value="" disabled selected hidden>
-              Genre
-            </option>
+          <select name="genre" id="" defaultValue="Genre">
             <option value="adventure">Adventure</option>
             <option value="comedy">Comedy</option>
             <option value="drama">Drama</option>
