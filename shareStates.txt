@@ -1,0 +1,4 @@
+==============inside Post component========================= 
+
+ const [isliked, setIsLiked] = useState(false);
+ const [like, setLike] = useState(post.like);
