@@ -1,4 +1,4 @@
-.listitem{
+.movieListitem{
     width: 225px;
     height: 120px;
     background-color: var(--main-color);
@@ -6,6 +6,10 @@
     overflow: hidden;
     cursor: pointer;
     color: white;
+
+    .movieInfo{
+        padding: 10px;
+    }
 
     img{
         width: 100%;
@@ -35,16 +39,16 @@
             height: 140px;
         }
 
-        .itemInfo{
+        .movieInfo{
             display: flex;
             flex-direction: column;
             padding: 5px;
 
-            .icons{
+            .movieIcons{
                 display: flex;
                 margin-bottom: 10px;
 
-                .icon{
+                .movieIcon{
                     border:2px solid white;
                     padding: 5px;
                     border-radius: 50%;
@@ -53,27 +57,28 @@
                 }
             }
 
-            .itemInfoTop{
+            .movieInfoTop{
                 display: flex;
                 align-items: center;
                 font-size: 14px;
                 font-weight: 600;
                 color: gray;
                 margin-bottom: 10px;
+                
 
-                .limit{
+                .movieLimit{
                     border: 1px solid gray;
                     margin: 0 10px;
                     padding: 1px 3px;
                 }
 
             }
-            .desc {
+            .movieDesc {
                 font-size: 13px;
                 margin-bottom: 10px;
               }
         
-            .genre {
+            .movieGenre {
                 font-size: 14px;
                 color: lightgray;
                 font-weight: 600;

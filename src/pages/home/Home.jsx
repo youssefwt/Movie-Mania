@@ -10,11 +10,12 @@ const Home = ({ type }) => {
   const [genre, setGenre] = useState(null);
 
   useEffect(() => {
+    console.log(genre);
     const getRandomLists = async () => {
       try {
         const res = await axios.get(
           `lists${type ? "?type=" + type : ""}${
-            genre ? "&genre=" + genre : ""
+            genre ? "&genre=" + genre.toLowerCase() : ""
           }`,
           {
             headers: {
@@ -35,10 +36,10 @@ const Home = ({ type }) => {
   return (
     <div className="home">
       <Navbar />
-      <Featured type={type} />
-      <List />
-      <List />
-      <List />
+      <Featured type={type} setGenre={setGenre} />
+      {lists.map((list) => (
+        <List key={list._id} list={list} />
+      ))}
     </div>
   );
 };

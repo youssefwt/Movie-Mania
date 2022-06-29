@@ -1,8 +1,8 @@
 import { Search, ArrowDropDown } from "@mui/icons-material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./navbar.scss";
+import "./movieNavbar.scss";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,8 +11,14 @@ const Navbar = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
+
+  useEffect(() => {
+    return () => {
+      window.onscroll = null;
+    };
+  });
   return (
-    <div className={isScrolled ? "navbar scrolled" : "navbar"}>
+    <div className={isScrolled ? "movieNavbar scrolled" : "movieNavbar"}>
       <div className="container">
         <div className="left">
           <img
