@@ -1,7 +1,31 @@
 import "./featured.scss";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const Featured = ({ type, setGenre }) => {
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        const res = await axios.get(`/movies/random?type=${type}`, {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjliZmE3ODNmZTE2ZTA0YjhmNzFiMCIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjU2NTY5NjEyLCJleHAiOjE2NTY4Mjg4MTJ9.7A4fh6wG8zcO6HDwv8WtJtbojocRJVl65vaJPN2-Jgk",
+          },
+        });
+        setContent(res.data[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getRandomContent();
+  }, [type]);
+
+  console.log(content);
+
   return (
     <div className="featured">
       {type && (
