@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./register.scss";
 
 const Register = () => {
@@ -6,13 +8,21 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const emailRef = useRef();
   const passwordRef = useRef();
+  const navigate = useNavigate();
 
   const handleStart = () => {
     setEmail(emailRef.current.value);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async (e) => {
+    e.preventDefault();
     setPassword(passwordRef.current.value);
+    await axios.post("/auth/register", {
+      email,
+      password,
+      userName: email.split("@")[0],
+    });
+    navigate("/login");
   };
 
   return (
@@ -24,7 +34,14 @@ const Register = () => {
             src="https://raw.githubusercontent.com/youssefwt/Movie-Mania/main/logo.png"
             alt=""
           />
-          <button className="loginButton">Sign in</button>
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+            className="loginButton"
+          >
+            Sign in
+          </button>
         </div>
       </div>
       <div className="container">
