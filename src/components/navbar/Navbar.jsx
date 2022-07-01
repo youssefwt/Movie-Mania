@@ -40,6 +40,9 @@ const Navbar = () => {
           <NavLink to="/newsfeed" className="link">
             <span>newsFeed</span>
           </NavLink>
+          <NavLink to="/profile" className="link">
+            <span>Profile</span>
+          </NavLink>
           <span>New and Popular</span>
           <span>My List</span>
         </div>
