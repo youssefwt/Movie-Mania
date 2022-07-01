@@ -29,7 +29,6 @@ const App = () => {
           <Route path="/series" element={<Home type="series" />} />
           <Route path="/watch" element={<Watch />} />
           <Route path="/newsfeed" element={<NewsFeed />} />
-          <Route path="/profile" element={<Profile />} />
         </>
       )}
     </Routes>
