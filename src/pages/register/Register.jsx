@@ -16,6 +16,9 @@ const Register = () => {
 
   const handleFinish = async (e) => {
     e.preventDefault();
+    setPassword(passwordRef.current.value);
+    console.log("email", email);
+    console.log("password", password);
     // setPassword(passwordRef.current.value);
     console.log("password ", password);
     await axios.post("/auth/register", {
