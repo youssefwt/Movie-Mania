@@ -25,7 +25,7 @@ export default function Feed({ username }) {
       );
     };
     fetchPosts();
-  }, [username, user._id, user.accessToken]);
+  }, [username, user]);
 
   return (
     <div className="feed">

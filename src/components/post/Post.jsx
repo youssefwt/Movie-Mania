@@ -24,24 +24,23 @@ export default function Post({ post }) {
     const fetchUsers = async () => {
       // get user by id
       const res = await axios.get(
-        `http://localhost:8800/users/?userId=${post.userId}`,
-        {
-          headers: { token: `Bearer ${user.accessToken}` },
-        }
+        `http://localhost:8800/users?userId=${post.userId}`
       );
       setUser(res.data);
     };
     fetchUsers();
-  }, [post.userId]);
+  }, [post.userId, user.accessToken]);
 
   const likeHandler = () => {
     try {
       //like / dislike a post
       axios.put(
         "http://localhost:8800/posts/" + post._id + "/like",
-        { userId: currentUser._id },
         {
-          headers: { token: `Bearer ${user.accessToken}` },
+          userId: currentUser._id,
+        },
+        {
+          headers: { token: `Bearer ${currentUser.accessToken}` },
         }
       );
     } catch (err) {}
@@ -53,11 +52,11 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`http://localhost:8800/posts/profile/${user.userName}`}>
+            <Link to={`/profile/${user.userName}`}>
               <img
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ? user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
@@ -73,7 +72,7 @@ export default function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          {post.image ? (
+          {post.img ? (
             <img src={PF + post.img} alt="" className="postImg" />
           ) : null}
         </div>

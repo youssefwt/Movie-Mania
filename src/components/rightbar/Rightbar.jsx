@@ -1,6 +1,5 @@
 import "./Rightbar.css";
 import { Users } from "../../dummyData";
-import Online from "../online/Online";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -11,6 +10,7 @@ export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  console.log(user);
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?.id)
   );
@@ -62,26 +62,6 @@ export default function Rightbar({ user }) {
       }
       setFollowed(!followed);
     } catch (err) {}
-  };
-
-  const NewsFeedRightbar = () => {
-    return (
-      <>
-        <div className="birthdayContainer">
-          <img className="birthdayImg" src="assets/gift.png" alt="" />
-          <span className="birthdayText">
-            <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
-          </span>
-        </div>
-        <img className="rightbarAd" src="assets/ad.png" alt="" />
-        <h4 className="rightbarTitle">Online Friends</h4>
-        <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
-        </ul>
-      </>
-    );
   };
 
   const ProfileRightbar = () => {
@@ -141,9 +121,8 @@ export default function Rightbar({ user }) {
   };
   return (
     <div className="rightbar">
-      {console.log}
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar /> : <NewsFeedRightbar />}
+        <ProfileRightbar />
       </div>
     </div>
   );

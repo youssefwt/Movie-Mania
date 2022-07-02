@@ -12,7 +12,6 @@ export default function NewsFeed() {
       <div className="NewsFeedContainer">
         <Sidebar />
         <Feed />
-        <Rightbar />
       </div>
     </>
   );

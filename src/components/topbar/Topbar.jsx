@@ -30,7 +30,9 @@ export default function Topbar() {
       <div className="topbarRight">
         <div className="tobparLinks">
           <span className="topbarLink">HomePage</span>
-          <span className="topbarLink">Timeline</span>
+          <Link to={`/newsfeed`}>
+            <span className="topbarLink">Timeline</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
@@ -48,7 +50,7 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <Link to={`http://localhost:8800/profile/${user.userName}`}>
+        <Link to={`/profile/${user.userName}`}>
           <img
             src={
               user.profilePicture
