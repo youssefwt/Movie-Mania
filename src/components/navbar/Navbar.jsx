@@ -41,7 +41,7 @@ const Navbar = () => {
             <span>newsFeed</span>
           </NavLink>
 
-          <NavLink to="/profile:userName" className="link">
+          <NavLink to="/profile/:userName" className="link">
             <span>Profile</span>
           </NavLink>
 

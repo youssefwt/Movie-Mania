@@ -48,7 +48,7 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <Link to={`/profile/${user.userName}`}>
+        <Link to={`http://localhost:8800/profile/${user.userName}`}>
           <img
             src={
               user.profilePicture

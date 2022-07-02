@@ -19,7 +19,12 @@ export default function Rightbar({ user }) {
     //get friends
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await axios.get(
+          "http://localhost:8800/posts/users/friends/" + user._id,
+          {
+            headers: { token: `Bearer ${user.accessToken}` },
+          }
+        );
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -31,14 +36,28 @@ export default function Rightbar({ user }) {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put(`/users/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `http://localhost:8800/users/${user._id}/unfollow`,
+          {
+            userId: currentUser._id,
+          },
+          //
+          {
+            headers: { token: `Bearer ${user.accessToken}` },
+          }
+        );
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axios.put(`/users/${user._id}/follow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `http://localhost:8800/users/${user._id}/follow`,
+          {
+            userId: currentUser._id,
+          },
+          //
+          {
+            headers: { token: `Bearer ${user.accessToken}` },
+          }
+        );
         dispatch({ type: "FOLLOW", payload: user._id });
       }
       setFollowed(!followed);
@@ -122,6 +141,7 @@ export default function Rightbar({ user }) {
   };
   return (
     <div className="rightbar">
+      {console.log}
       <div className="rightbarWrapper">
         {user ? <ProfileRightbar /> : <NewsFeedRightbar />}
       </div>

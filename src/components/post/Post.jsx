@@ -23,7 +23,12 @@ export default function Post({ post }) {
   useEffect(() => {
     const fetchUsers = async () => {
       // get user by id
-      const res = await axios.get(`/users/?userId=${post.userId}`);
+      const res = await axios.get(
+        `http://localhost:8800/users/?userId=${post.userId}`,
+        {
+          headers: { token: `Bearer ${user.accessToken}` },
+        }
+      );
       setUser(res.data);
     };
     fetchUsers();
@@ -32,7 +37,13 @@ export default function Post({ post }) {
   const likeHandler = () => {
     try {
       //like / dislike a post
-      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+      axios.put(
+        "http://localhost:8800/posts/" + post._id + "/like",
+        { userId: currentUser._id },
+        {
+          headers: { token: `Bearer ${user.accessToken}` },
+        }
+      );
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -42,7 +53,7 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`/profile/${user.userName}`}>
+            <Link to={`http://localhost:8800/posts/profile/${user.userName}`}>
               <img
                 src={
                   user.profilePicture
@@ -62,7 +73,9 @@ export default function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img src={PF + post.img} alt="" className="postImg" />
+          {post.image ? (
+            <img src={PF + post.img} alt="" className="postImg" />
+          ) : null}
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

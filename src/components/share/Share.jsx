@@ -30,11 +30,15 @@ export default function Share() {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("/upload", data);
+        await axios.post("http://localhost:8800/upload", data, {
+          headers: { token: `Bearer ${user.accessToken}` },
+        });
       } catch (err) {}
     }
     try {
-      await axios.post("/posts", newPost);
+      await axios.post("http://localhost:8800/posts", newPost, {
+        headers: { token: `Bearer ${user.accessToken}` },
+      });
       window.location.reload();
     } catch (err) {}
   };
