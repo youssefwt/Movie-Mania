@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import NewsFeed from "./pages/newsFeed/NewsFeed";
+import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import Watch from "./pages/watch/Watch";
 import { AuthContext } from "./authContext/AuthContext";
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/series" element={<Home type="series" />} />
           <Route path="/watch" element={<Watch />} />
           <Route path="/newsfeed" element={<NewsFeed />} />
+          <Route path="/profile:userName" element={<Profile />} />
         </>
       )}
     </Routes>

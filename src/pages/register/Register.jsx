@@ -19,6 +19,8 @@ const Register = () => {
     setPassword(passwordRef.current.value);
     console.log("email", email);
     console.log("password", password);
+    // setPassword(passwordRef.current.value);
+    console.log("password ", password);
     await axios.post("/auth/register", {
       email,
       password,
@@ -61,7 +63,14 @@ const Register = () => {
           </div>
         ) : (
           <form className="input">
-            <input type="password" placeholder="password" ref={passwordRef} />
+            <input
+              type="password"
+              placeholder="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              ref={passwordRef}
+            />
             <button className="registerButton" onClick={handleFinish}>
               Subscribe
             </button>
