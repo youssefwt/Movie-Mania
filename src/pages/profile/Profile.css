@@ -2,10 +2,6 @@
     display: flex;
 }
 
-.profile{
-    display: flex;
-}
-
 .profileRight{
     flex: 9;
 }
