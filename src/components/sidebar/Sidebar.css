@@ -1,5 +1,5 @@
 .sidebar {
-  flex: 3;
+  flex: 2;
   height: calc(100vh - 50px);
   overflow-y: scroll;
   position: sticky;
@@ -50,10 +50,37 @@
     margin: 20px 0;
   }
   
+  .sidebarLiftContainer{
+ 
+    display: flex;
+    align-self:center ;
+ 
+  }
+  
   .sidebarFriendList {
     padding: 0;
     margin: 0;
     list-style: none;
+    display:flex;
+    align-items: center;
+   
+   
+  
+   
   }
 
-  
+  .sidebarFollowButton{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #1872f2;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+   
