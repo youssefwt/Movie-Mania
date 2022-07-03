@@ -92,21 +92,26 @@ export default function Sidebar({ user }) {
         <div className="sidebarLiftContainer">
           <ul className="sidebarFriendLList">
             {followers.map((u) => (
-              <div key={u._id} className="sidebarFollowContainer">
-                <div>
-                  <CloseFriend user={u} />
-                </div>
-
-                <div className="sidebarFollow">
-                  <button
-                    className="sidebarFollowButton"
-                    onClick={() => {
-                      handleClick(u);
-                    }}
-                  >
-                    {followed ? "Unfollow" : "Follow"}
-                    {followed ? <Remove /> : <Add />}
-                  </button>
+              <div key={u._id}>
+                <div class="row">
+                  <div className="sidebarFollowContainer">
+                    <div class=" col-4  col-sm-8 ">
+                      <CloseFriend user={u} />
+                    </div>
+                    <div class="  col-8  col-sm-8 ">
+                      <div className="sidebarFollow">
+                        <button
+                          className="sidebarFollowButton"
+                          onClick={() => {
+                            handleClick(u);
+                          }}
+                        >
+                          {followed ? "Unfollow" : "Follow"}
+                          {followed ? <Remove /> : <Add />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

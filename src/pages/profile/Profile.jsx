@@ -27,38 +27,47 @@ export default function Profile() {
   return (
     <>
       <Topbar />
-      <div className="profile">
-        <Sidebar />
-        <div className="profileRight">
-          <div className="profileRightTop">
-            <div className="profileCover">
-              <img
-                className="profileCoverImg"
-                src={
-                  user.coverPicture
-                    ? PF + user.coverPicture
-                    : PF + "person/noCover.png"
-                }
-                alt=""
-              />
-              <img
-                className="profileUserImg"
-                src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
-                }
-                alt=""
-              />
-            </div>
-            <div className="profileInfo">
-              <h4 className="profileInfoName">{user.userName}</h4>
-              <span className="profileInfoDesc">{user.desc}</span>
-            </div>
+      <div class="row ">
+        <div className="profile">
+          <div class="col-lg-2 col-md-4 col-sm-5 col-5">
+            <Sidebar />
           </div>
-          <div className="profileRightBottom">
-            <Feed username={username} />
-            <Rightbar user={user} />
+          <div className="profileRight">
+            <div className="profileRightTop">
+              <div className="profileCover">
+                <img
+                  className="profileCoverImg"
+                  src={
+                    user.coverPicture
+                      ? PF + user.coverPicture
+                      : PF + "person/noCover.png"
+                  }
+                  alt=""
+                />
+                <img
+                  className="profileUserImg"
+                  src={
+                    user.profilePicture
+                      ? PF + user.profilePicture
+                      : PF + "person/noAvatar.png"
+                  }
+                  alt=""
+                />
+              </div>
+              <div className="profileInfo">
+                <h4 className="profileInfoName">{user.userName}</h4>
+                <span className="profileInfoDesc">{user.desc}</span>
+              </div>
+            </div>
+
+            <div className="profileRightBottom">
+              <div class=" col-8  ">
+                <Feed username={username} />
+              </div>
+              <div class="col-2 ">
+                <Rightbar user={user} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

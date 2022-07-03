@@ -12,9 +12,16 @@ export default function NewsFeed() {
   return (
     <>
       <Topbar />
-      <div className="NewsFeedContainer">
-        <Sidebar user={user} />
-        <Feed />
+
+      <div class="row ">
+        <div className="NewsFeedContainer">
+          <div class="col-lg-3 col-md-4 col-5">
+            <Sidebar user={user} />
+          </div>
+          <div class="col-lg-9 col-md-8 col-7">
+            <Feed />
+          </div>
+        </div>
       </div>
     </>
   );
