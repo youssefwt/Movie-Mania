@@ -29,7 +29,7 @@ export default function Share() {
         });
       } catch (err) {}
     }
-    if (!file && !desc.current.value) {
+    if (!file && !desc.current.value.trim()) {
       alert("Please fill all fields");
     } else {
       try {

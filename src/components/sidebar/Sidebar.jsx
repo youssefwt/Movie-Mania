@@ -35,15 +35,12 @@ export default function Sidebar({ user }) {
     getFriends();
   }, [currentUser]);
 
-  const handleClick = async (id) => {
+  const handleClick = async (user) => {
     try {
       if (followed) {
         await axios.put(
-          `http://localhost:8800/users/${id}/unfollow`,
-          {
-            userId: currentUser._id,
-          },
-          //
+          `http://localhost:8800/users/${user._id}/unfollow`,
+          {},
           {
             headers: { token: `Bearer ${currentUser.accessToken}` },
           }
@@ -51,13 +48,10 @@ export default function Sidebar({ user }) {
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(
-          `http://localhost:8800/users/${id}/follow`,
+          `http://localhost:8800/users/${user._id}/follow`,
+          {},
           {
-            userId: currentUser._id,
-          },
-          //
-          {
-            headers: { token: `Bearer ${user.accessToken}` },
+            headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
         dispatch({ type: "FOLLOW", payload: user._id });
@@ -103,9 +97,12 @@ export default function Sidebar({ user }) {
                   <button
                     className="sidebarFollowButton"
                     onClick={() => {
-                      handleClick(u._id);
+                      handleClick(u);
                     }}
-                  />
+                  >
+                    {followed ? "Unfollow" : "Follow"}
+                    {followed ? <Remove /> : <Add />}
+                  </button>
                 </div>
               </div>
             ))}
