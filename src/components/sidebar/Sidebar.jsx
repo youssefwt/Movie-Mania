@@ -8,6 +8,7 @@ import {
 import { Add, Remove } from "@mui/icons-material";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
+import { Link } from "react-router-dom";
 import CloseFriend from "../closeFriend/CloseFriend";
 import axios from "axios";
 
@@ -26,6 +27,7 @@ export default function Sidebar({ user }) {
           }
         );
         setfollowers(followersList.data);
+        // console.log(followersList.data);
       } catch (err) {
         console.log(err);
       }
@@ -74,7 +76,12 @@ export default function Sidebar({ user }) {
           </li>
           <li className="sidebarListItem">
             <Chat className="sidebarIcon" />
-            <span className="sidebarListItemText">Chats</span>
+            <Link
+              to={`/messenger`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <span className="sidebarListItemText">Chats</span>
+            </Link>
           </li>
           <li className="sidebarListItem">
             <PlayCircleFilledOutlined className="sidebarIcon" />
@@ -98,10 +105,7 @@ export default function Sidebar({ user }) {
                     onClick={() => {
                       handleClick(u._id);
                     }}
-                  >
-                    {followed ? "Unfollow" : "Follow"}
-                    {followed ? <Remove /> : <Add />}
-                  </button>
+                  />
                 </div>
               </div>
             ))}
