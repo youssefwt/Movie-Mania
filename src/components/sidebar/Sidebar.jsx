@@ -6,27 +6,26 @@ import {
   RssFeed,
 } from "@mui/icons-material";
 import { Add, Remove } from "@mui/icons-material";
-
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
 import { Link } from "react-router-dom";
-
 import CloseFriend from "../closeFriend/CloseFriend";
 import axios from "axios";
+
 export default function Sidebar({ user }) {
   const [followers, setfollowers] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  console.log(user);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
-  );
+  const [followed, setFollowed] = useState(true);
   useEffect(() => {
     //get friends
     const getFriends = async () => {
       try {
-        const followersList = await axios.get("http://localhost:8800/users", {
-          headers: { token: `Bearer ${user.accessToken}` },
-        });
+        const followersList = await axios.get(
+          `http://localhost:8800/users/friends/${currentUser._id}`,
+          {
+            headers: { token: `Bearer ${currentUser.accessToken}` },
+          }
+        );
         setfollowers(followersList.data);
         // console.log(followersList.data);
       } catch (err) {
@@ -34,31 +33,25 @@ export default function Sidebar({ user }) {
       }
     };
     getFriends();
-  }, [user]);
+  }, [currentUser]);
 
-  const handleClick = async () => {
+  const handleClick = async (user) => {
     try {
       if (followed) {
         await axios.put(
           `http://localhost:8800/users/${user._id}/unfollow`,
+          {},
           {
-            userId: currentUser._id,
-          },
-          //
-          {
-            headers: { token: `Bearer ${user.accessToken}` },
+            headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(
           `http://localhost:8800/users/${user._id}/follow`,
+          {},
           {
-            userId: currentUser._id,
-          },
-          //
-          {
-            headers: { token: `Bearer ${user.accessToken}` },
+            headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
         dispatch({ type: "FOLLOW", payload: user._id });
@@ -100,12 +93,17 @@ export default function Sidebar({ user }) {
             {followers.map((u) => (
               <div key={u._id}>
                 <CloseFriend user={u} />
-                {/* <div className="sidebarFollow">
-                  <button className="sidebarFollowButton" onClick={handleClick}>
+                <div className="sidebarFollow">
+                  <button
+                    className="sidebarFollowButton"
+                    onClick={() => {
+                      handleClick(u);
+                    }}
+                  >
                     {followed ? "Unfollow" : "Follow"}
                     {followed ? <Remove /> : <Add />}
                   </button>
-                </div> */}
+                </div>
               </div>
             ))}
           </ul>
