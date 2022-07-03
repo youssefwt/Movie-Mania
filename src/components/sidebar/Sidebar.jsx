@@ -92,8 +92,11 @@ export default function Sidebar({ user }) {
         <div className="sidebarLiftContainer">
           <ul className="sidebarFriendLList">
             {followers.map((u) => (
-              <div key={u._id}>
-                <CloseFriend user={u} />
+              <div key={u._id} className="sidebarFollowContainer">
+                <div>
+                  <CloseFriend user={u} />
+                </div>
+
                 <div className="sidebarFollow">
                   <button
                     className="sidebarFollowButton"
