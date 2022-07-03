@@ -9,8 +9,7 @@ import { Add, Remove } from "@mui/icons-material";
 
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
-
-import { Users } from "../../dummyData";
+import { Link } from "react-router-dom";
 
 import CloseFriend from "../closeFriend/CloseFriend";
 import axios from "axios";
@@ -29,7 +28,7 @@ export default function Sidebar({ user }) {
           headers: { token: `Bearer ${user.accessToken}` },
         });
         setfollowers(followersList.data);
-        console.log(followersList.data);
+        // console.log(followersList.data);
       } catch (err) {
         console.log(err);
       }
@@ -78,7 +77,12 @@ export default function Sidebar({ user }) {
           </li>
           <li className="sidebarListItem">
             <Chat className="sidebarIcon" />
-            <span className="sidebarListItemText">Chats</span>
+            <Link
+              to={`/messenger`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <span className="sidebarListItemText">Chats</span>
+            </Link>
           </li>
           <li className="sidebarListItem">
             <PlayCircleFilledOutlined className="sidebarIcon" />
@@ -96,12 +100,12 @@ export default function Sidebar({ user }) {
             {followers.map((u) => (
               <div key={u._id}>
                 <CloseFriend user={u} />
-                <div className="sidebarFollow">
+                {/* <div className="sidebarFollow">
                   <button className="sidebarFollowButton" onClick={handleClick}>
                     {followed ? "Unfollow" : "Follow"}
                     {followed ? <Remove /> : <Add />}
                   </button>
-                </div>
+                </div> */}
               </div>
             ))}
           </ul>

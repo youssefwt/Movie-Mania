@@ -9,6 +9,7 @@ import Watch from "./pages/watch/Watch";
 import { AuthContext } from "./authContext/AuthContext";
 import { useContext } from "react";
 import Subscribe from "./components/subscribe/Subscribe";
+import Messenger from "./pages/Messenger/Messenger";
 // import Profile from "./pages/profile/Profile";
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/watch" element={<Watch />} />
           <Route path="/newsfeed" element={<NewsFeed />} />
           <Route path="/profile/:userName" element={<Profile />} />
+          <Route path="/messenger" element={<Messenger />} />
         </>
       )}
     </Routes>
