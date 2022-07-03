@@ -1,6 +1,6 @@
 import "./Post.css";
 
-import { MoreVert } from "@mui/icons-material";
+// import { MoreVert } from "@mui/icons-material";
 
 import { useState, useEffect, useContext } from "react";
 
@@ -66,9 +66,7 @@ export default function Post({ post }) {
             <span className="postUsername">{user.userName}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
-          <div className="postTopRight">
-            <MoreVert />
-          </div>
+          {/* <div className="postTopRight"><MoreVert /></div> */}
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
@@ -84,17 +82,12 @@ export default function Post({ post }) {
               alt=""
               onClick={likeHandler}
             />
-            <img
-              className="likeIcon"
-              src={`${PF}heart.png`}
-              alt=""
-              onClick={likeHandler}
-            />
+
             <span className="postLikeCounter">{like} people like it</span>
           </div>
-          <div className="postBottomRight">
+          {/* <div className="postBottomRight">
             <span className="postCommentText">{post.comment} comments</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
