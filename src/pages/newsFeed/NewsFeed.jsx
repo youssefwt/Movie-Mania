@@ -4,24 +4,11 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import "./NewsFeed.css";
-
-import { useState, useEffect } from "react";
-
-import axios from "axios";
-
-import { useParams } from "react-router";
+import { AuthContext } from "../../authContext/AuthContext";
+import { useContext, useEffect } from "react";
 
 export default function NewsFeed() {
-  const [user, setUser] = useState({});
-  const username = useParams().username;
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
-      setUser(res.data);
-    };
-    fetchUser();
-  }, [username, user.accessToken]);
+  const { user } = useContext(AuthContext);
   return (
     <>
       <Topbar />

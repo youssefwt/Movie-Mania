@@ -1,11 +1,5 @@
 import "./Share.css";
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  Cancel,
-} from "@mui/icons-material";
+import { PermMedia, Cancel } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
 import axios from "axios";
@@ -35,12 +29,16 @@ export default function Share() {
         });
       } catch (err) {}
     }
-    try {
-      await axios.post("http://localhost:8800/posts", newPost, {
-        headers: { token: `Bearer ${user.accessToken}` },
-      });
-      window.location.reload();
-    } catch (err) {}
+    if (!file && !desc.current.value) {
+      alert("Please fill all fields");
+    } else {
+      try {
+        await axios.post("http://localhost:8800/posts", newPost, {
+          headers: { token: `Bearer ${user.accessToken}` },
+        });
+        window.location.reload();
+      } catch (err) {}
+    }
   };
 
   return (
@@ -57,7 +55,7 @@ export default function Share() {
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + user.username + "?"}
+            placeholder={"What's in your mind " + user.userName + "?"}
             className="shareInput"
             ref={desc}
           />

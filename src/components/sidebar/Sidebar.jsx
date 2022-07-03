@@ -6,54 +6,50 @@ import {
   RssFeed,
 } from "@mui/icons-material";
 import { Add, Remove } from "@mui/icons-material";
-
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
-
-import { Users } from "../../dummyData";
-
 import CloseFriend from "../closeFriend/CloseFriend";
 import axios from "axios";
+
 export default function Sidebar({ user }) {
   const [followers, setfollowers] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  console.log(user);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
-  );
+  const [followed, setFollowed] = useState(true);
   useEffect(() => {
     //get friends
     const getFriends = async () => {
       try {
-        const followersList = await axios.get("http://localhost:8800/users", {
-          headers: { token: `Bearer ${user.accessToken}` },
-        });
+        const followersList = await axios.get(
+          `http://localhost:8800/users/friends/${currentUser._id}`,
+          {
+            headers: { token: `Bearer ${currentUser.accessToken}` },
+          }
+        );
         setfollowers(followersList.data);
-        console.log(followersList.data);
       } catch (err) {
         console.log(err);
       }
     };
     getFriends();
-  }, [user]);
+  }, [currentUser]);
 
-  const handleClick = async () => {
+  const handleClick = async (id) => {
     try {
       if (followed) {
         await axios.put(
-          `http://localhost:8800/users/${user._id}/unfollow`,
+          `http://localhost:8800/users/${id}/unfollow`,
           {
             userId: currentUser._id,
           },
           //
           {
-            headers: { token: `Bearer ${user.accessToken}` },
+            headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(
-          `http://localhost:8800/users/${user._id}/follow`,
+          `http://localhost:8800/users/${id}/follow`,
           {
             userId: currentUser._id,
           },
@@ -97,7 +93,12 @@ export default function Sidebar({ user }) {
               <div key={u._id}>
                 <CloseFriend user={u} />
                 <div className="sidebarFollow">
-                  <button className="sidebarFollowButton" onClick={handleClick}>
+                  <button
+                    className="sidebarFollowButton"
+                    onClick={() => {
+                      handleClick(u._id);
+                    }}
+                  >
                     {followed ? "Unfollow" : "Follow"}
                     {followed ? <Remove /> : <Add />}
                   </button>
