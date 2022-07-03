@@ -11,15 +11,18 @@ export default function NewsFeed() {
   const { user } = useContext(AuthContext);
   return (
     <>
-      <Topbar />
-
-      <div class="row ">
-        <div className="NewsFeedContainer">
-          <div class="col-lg-3 col-md-4 col-5">
-            <Sidebar user={user} />
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <Topbar />
           </div>
-          <div class="col-lg-9 col-md-8 col-7">
-            <Feed />
+          <div className="NewsFeedContainer">
+            <div class="col-2">
+              <Sidebar user={user} />
+            </div>
+            <div class="col-9">
+              <Feed />
+            </div>
           </div>
         </div>
       </div>
