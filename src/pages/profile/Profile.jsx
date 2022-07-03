@@ -21,7 +21,6 @@ export default function Profile() {
         `http://localhost:8800/users?username=${username}`
       );
       setUser(res.data);
-      console.log(res.data);
     };
     fetchUser();
   }, [username, user.accessToken]);

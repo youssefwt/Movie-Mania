@@ -8,10 +8,12 @@ import FavouriteMovie from "../favouriteMovie/FavouriteMovie";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [likes, setLikes] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(false);
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
+    setLikes(user?.likes);
   }, [currentUser, user]);
   const handleClick = async () => {
     try {
@@ -50,9 +52,13 @@ export default function Rightbar({ user }) {
         <h4 className="rightbarTitle">Favourite Movies</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
-            <FavouriteMovie />
-            <FavouriteMovie />
-            <FavouriteMovie />
+            {user && user.likes && user.likes.length > 0 ? (
+              user.likes.map((movieId) => (
+                <FavouriteMovie key={movieId} movieId={movieId} />
+              ))
+            ) : (
+              <p>No favourite movies</p>
+            )}
           </div>
         </div>
       </>

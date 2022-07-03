@@ -1,16 +1,27 @@
+import { useState, useEffect, useContext } from "react";
 import "./FavouriteMovie.css";
+import axios from "axios";
+import { AuthContext } from "../../authContext/AuthContext";
 
-export default function FavouriteMovie() {
+export default function FavouriteMovie({ movieId }) {
+  const [movie, setMovie] = useState([]);
+  const { user: currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchMovie = async () => {
+      const res = await axios.get(`http://localhost:8800/movies/${movieId}`, {
+        headers: { token: `Bearer ${currentUser.accessToken}` },
+      });
+      setMovie(res.data);
+    };
+    fetchMovie();
+  }, [movieId]);
   return (
     <>
       <li className="rightbarFavouriteMovie">
-        <img
-          src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          alt=""
-          className="rightbarFavouriteMovieImg"
-        />
+        <img src={movie.image} alt="" className="rightbarFavouriteMovieImg" />
 
-        <span className="rightbarFavouriteMovieName">Movie </span>
+        <span className="rightbarFavouriteMovieName">{movie.title} </span>
       </li>
     </>
   );
