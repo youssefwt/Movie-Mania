@@ -18,8 +18,6 @@ export default function Login() {
     login({ email, password }, dispatch);
   };
 
-  console.log(errors);
-
   const navigate = useNavigate();
 
   return (

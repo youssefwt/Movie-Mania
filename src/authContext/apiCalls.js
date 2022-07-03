@@ -1,5 +1,6 @@
 import axios from "axios";
-import { loginFailure, loginStart, loginSuccess } from "./AuthActions";
+import { loginStart, loginSuccess } from "./AuthActions";
+import Swal from "sweetalert2";
 
 export const login = async (user, dispatch) => {
   dispatch(loginStart());
@@ -7,6 +8,12 @@ export const login = async (user, dispatch) => {
     const res = await axios.post("auth/login", user);
     dispatch(loginSuccess(res.data));
   } catch (err) {
-    dispatch(loginFailure());
+    console.log("err response", err.response);
+    Swal.fire({
+      text: err.response.data,
+      confirmButtonText: "OK",
+      confirmButtonColor: "#f44336",
+      width: "20rem",
+    });
   }
 };
