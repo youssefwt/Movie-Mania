@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
+import FavouriteMovie from "../favouriteMovie/FavouriteMovie";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -46,29 +47,14 @@ export default function Rightbar({ user }) {
             {followed ? <Remove /> : <Add />}
           </button>
         )}
-        <h4 className="rightbarTitle">User information</h4>
+        <h4 className="rightbarTitle">Favourite Movies</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">{user.city}</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">{user.from}</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Relationship:</span>
-            <span className="rightbarInfoValue">
-              {user.relationship === 1
-                ? "Single"
-                : user.relationship === 1
-                ? "Married"
-                : "-"}
-            </span>
+            <FavouriteMovie />
+            <FavouriteMovie />
+            <FavouriteMovie />
           </div>
         </div>
-        <h4 className="rightbarTitle">User friends</h4>
-        <div className="rightbarFollowings"></div>
       </>
     );
   };

@@ -20,6 +20,7 @@ export default function Sidebar({ user }) {
     //get friends
     const getFriends = async () => {
       try {
+        console.log(currentUser._id);
         const followersList = await axios.get(
           `http://localhost:8800/users/friends/${currentUser._id}`,
           {
