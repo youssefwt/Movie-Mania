@@ -1,33 +1,74 @@
 import "./watch.scss";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { AuthContext } from "../../authContext/AuthContext";
-import { useContext } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 const Watch = () => {
   const location = useLocation();
   const movie = location.state;
-  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  // const isSubscribed = async () => {
+  //   try {
+  //     const res = await axios.get("/payment/isSubscribed", {
+  //       headers: {
+  //         token:
+  //           "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+  //       },
+  //     });
+  //     console.log(res.data.isSubscribed);
+  //     if (!res.data.isSubscribed) {
+  //       navigate("/subscribe", { state: movie });
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // isSubscribed();
 
   useEffect(() => {
-    const subscribedTillStr = user.subscribedTill.slice(0, 10);
-    const subscribedTill = new Date(subscribedTillStr);
-    const daysLeft = (subscribedTill - new Date()) / (1000 * 60 * 60 * 24);
-    if (daysLeft <= 0) {
-      navigate("/subscribe");
-    }
-  }, [user, navigate]);
+    const isSubscribed = async () => {
+      try {
+        const res = await axios.get("/payment/isSubscribed", {
+          headers: {
+            token:
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+          },
+        });
+        console.log(res.data.isSubscribed);
+        if (!res.data.isSubscribed) {
+          navigate("/subscribe", { state: movie });
+        } else {
+          setIsSubscribed(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    isSubscribed();
+  });
 
   return (
-    <div className="watch">
-      <div className="back">
-        <ArrowBackOutlinedIcon />
-        Home
-      </div>
-      <video className="video" autoPlay progress controls src={movie.video} />
-    </div>
+    isSubscribed && (
+      <>
+        <div className="watch">
+          <div className="back">
+            <ArrowBackOutlinedIcon />
+            <Link to="/">Home</Link>
+          </div>
+          <video
+            className="video"
+            autoPlay
+            progress
+            controls
+            src={movie.video}
+          />
+        </div>
+      </>
+    )
   );
 };
 

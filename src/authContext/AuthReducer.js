@@ -12,6 +12,17 @@ const AuthReducer = (state, action) => {
         isFetching: false,
         error: false,
       };
+    case "SUBSCRIBED":
+      return {
+        user: {
+          ...state.user,
+          subscribedTill: new Date(
+            new Date().getTime() + 30 * 24 * 60 * 60 * 1000
+          ),
+        },
+        isFetching: false,
+        error: false,
+      };
     case "LOGIN_FAILURE":
       return {
         user: null,

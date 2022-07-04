@@ -1,12 +1,20 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../authContext/AuthContext";
+import { subscribe } from "../../authContext/AuthActions";
 
 const Subscribe = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const movie = location.state;
+  const { dispatch } = useContext(AuthContext);
+
+  console.log(location, movie);
 
   const onToken = (token) => {
     console.log(token);
@@ -26,8 +34,14 @@ const Subscribe = () => {
             },
           }
         );
-        console.log("res", res);
-        navigate(-1);
+        // console.log("res", res);
+        // const newUser = JSON.parse(localStorage.getItem("user"));
+        // newUser.subscribedTill = new Date(
+        //   new Date().getTime() + 30 * 24 * 60 * 60 * 1000
+        // );
+        // localStorage.setItem("user", JSON.stringify(newUser));
+        // subscribe(dispatch);
+        navigate("/watch", { state: movie });
       } catch (err) {
         console.log("err", err);
       }
