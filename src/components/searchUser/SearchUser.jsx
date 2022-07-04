@@ -27,8 +27,7 @@ export default function SearchUser() {
       }
     };
     getUsers();
-    console.log(users);
-  }, [searchParams]);
+  }, [searchParams, user]);
 
   return (
     <>

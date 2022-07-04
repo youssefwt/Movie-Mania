@@ -1,5 +1,5 @@
 import "./Profile.css";
-
+import { PermMedia, Cancel } from "@mui/icons-material";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -14,6 +14,23 @@ export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().userName;
+  const [file, setFile] = useState(null);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      const image = fileName;
+      try {
+        await axios.post("http://localhost:8800/api/upload", data, {
+          headers: { token: `Bearer ${user.accessToken}` },
+        });
+      } catch (err) {}
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -44,15 +61,48 @@ export default function Profile() {
                   }
                   alt=""
                 />
-                <img
-                  className="profileUserImg"
-                  src={
-                    user.profilePicture
-                      ? PF + user.profilePicture
-                      : PF + "person/noAvatar.png"
-                  }
-                  alt=""
-                />
+                {file && (
+                  <div className="couldBeProfileImgContainer">
+                    <img
+                      className="CouldBeProfileImg"
+                      src={URL.createObjectURL(file)}
+                      alt=""
+                    />
+                    <Cancel
+                      className="CouldbeCancelImg"
+                      onClick={() => setFile(null)}
+                    />
+                  </div>
+                )}
+                <form className="CouldBeProfileForm" onSubmit={submitHandler}>
+                  <div className="CouldBeProfileOptions">
+                    <label htmlFor="file" className="shareOption">
+                      <img
+                        className="profileUserImg"
+                        src={
+                          user.profilePicture
+                            ? PF + user.profilePicture
+                            : PF + "person/noAvatar.png"
+                        }
+                        alt=""
+                      />
+                      <input
+                        style={{ display: "none" }}
+                        type="file"
+                        id="file"
+                        accept=".png,.jpeg,.jpg"
+                        onChange={(e) => setFile(e.target.files[0])}
+                      />
+                    </label>
+                  </div>
+                  {file && (
+                    <div className="DivOfButton">
+                      <button className="CouldBeSubmitButton">
+                        Change Picture
+                      </button>
+                    </div>
+                  )}
+                </form>
               </div>
               <div className="profileInfo">
                 <h4 className="profileInfoName">{user.userName}</h4>
