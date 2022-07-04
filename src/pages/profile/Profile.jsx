@@ -19,7 +19,7 @@ export default function Profile() {
   console.log(currentUser);
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (file) {
+    if (file && user._id === currentUser._id) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
       data.append("name", fileName);
