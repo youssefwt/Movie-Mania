@@ -1,13 +1,12 @@
 import "./Post.css";
-
-// import { MoreVert } from "@mui/icons-material";
-
 import { useState, useEffect, useContext } from "react";
-
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
+import { MoreVert } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -31,10 +30,21 @@ export default function Post({ post }) {
     fetchUsers();
   }, [post.userId, user.accessToken]);
 
-  const likeHandler = () => {
+  const deleteHandler = async () => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await axios.delete(`http://localhost:8800/posts/${post._id}`, {
+          headers: { token: `Bearer ${currentUser.accessToken}` },
+        });
+        window.location.reload();
+      } catch (err) {}
+    }
+  };
+
+  const likeHandler = async () => {
     try {
       //like / dislike a post
-      axios.put(
+      await axios.put(
         "http://localhost:8800/posts/" + post._id + "/like",
         {
           userId: currentUser._id,
@@ -66,7 +76,13 @@ export default function Post({ post }) {
             <span className="postUsername">{user.userName}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
-          {/* <div className="postTopRight"><MoreVert /></div> */}
+          {currentUser._id === post.userId && (
+            <div className="postTopRight">
+              <Button variant="outlined" color="error" onClick={deleteHandler}>
+                <ClearIcon />
+              </Button>
+            </div>
+          )}
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>

@@ -13,17 +13,16 @@ export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().userName;
-  const [file, setFile] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [coverFile, setCoverFile] = useState(null);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-
-  const submitHandler = async (e) => {
+  const profilePictureHandler = async (e) => {
     e.preventDefault();
-    if (file && user._id === currentUser._id) {
+    if (profilePicture && user._id === currentUser._id) {
       const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
+      const profilePictureName = Date.now() + profilePicture.name;
+      data.append("name", profilePictureName);
+      data.append("file", profilePicture);
       try {
         await axios.post("http://localhost:8800/api/upload", data, {
           headers: { token: `Bearer ${currentUser.accessToken}` },
@@ -31,13 +30,14 @@ export default function Profile() {
         await axios.patch(
           `http://localhost:8800/users/${user._id}`,
           {
-            profilePicture: fileName,
+            profilePicture: profilePictureName,
+            oldProfilePicture: currentUser.profilePicture,
           },
           {
             headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
-        dispatch({ type: "CHANGEPP", payload: fileName });
+        dispatch({ type: "CHANGEPP", payload: profilePictureName });
         window.location.reload();
       } catch (err) {}
     }
@@ -58,6 +58,7 @@ export default function Profile() {
           `http://localhost:8800/users/${user._id}`,
           {
             coverPicture: coverFileName,
+            oldCoverPicture: currentUser.coverPicture,
           },
           {
             headers: { token: `Bearer ${currentUser.accessToken}` },
@@ -152,25 +153,25 @@ export default function Profile() {
                 {/* profile Image */}
                 {currentUser._id === user._id ? (
                   <div class="profileChangePictureContainer">
-                    {file && (
+                    {profilePicture && (
                       <div className="couldBeProfileImgContainer">
                         <img
                           className="CouldBeProfileImg"
-                          src={URL.createObjectURL(file)}
+                          src={URL.createObjectURL(profilePicture)}
                           alt=""
                         />
                         <Cancel
                           className="CouldbeCancelImg"
-                          onClick={() => setFile(null)}
+                          onClick={() => setProfilePicture(null)}
                         />
                       </div>
                     )}
                     <form
                       className="CouldBeProfileForm"
-                      onSubmit={submitHandler}
+                      onSubmit={profilePictureHandler}
                     >
                       <div className="CouldBeProfileOptions">
-                        <label htmlFor="file" className="shareOption">
+                        <label htmlFor="profilePicture" className="shareOption">
                           <img
                             className="profileUserImg"
                             src={
@@ -183,13 +184,15 @@ export default function Profile() {
                           <input
                             style={{ display: "none" }}
                             type="file"
-                            id="file"
+                            id="profilePicture"
                             accept=".png,.jpeg,.jpg"
-                            onChange={(e) => setFile(e.target.files[0])}
+                            onChange={(e) =>
+                              setProfilePicture(e.target.files[0])
+                            }
                           />
                         </label>
                       </div>
-                      {file && (
+                      {profilePicture && (
                         <div className="DivOfButton">
                           <button className="CouldBeSubmitButton">
                             Change Picture
