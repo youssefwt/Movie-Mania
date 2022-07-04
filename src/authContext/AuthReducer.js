@@ -53,6 +53,22 @@ const AuthReducer = (state, action) => {
           ),
         },
       };
+    case "CHANGEPP":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          profilePicture: action.payload,
+        },
+      };
+    case "CHANGECP":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          coverPicture: action.payload,
+        },
+      };
     default:
       return { ...state };
   }
