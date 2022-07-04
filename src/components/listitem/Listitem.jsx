@@ -83,9 +83,11 @@ const Listitem = ({ index, item }) => {
 
             <div className="movieInfo">
               <div className="movieIcons">
-                <Link to="/watch" state={movie && movie}>
-                  <PlayArrowIcon className="movieIcon" />
-                </Link>
+                {movie && (
+                  <Link to="/watch" state={movie}>
+                    <PlayArrowIcon className="movieIcon" />
+                  </Link>
+                )}
                 {movie &&
                 movie.likes.includes(
                   JSON.parse(localStorage.getItem("user"))._id
