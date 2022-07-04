@@ -58,15 +58,17 @@ export default function Messenger() {
   }, [user._id]);
 
   useEffect(() => {
-    const getMessages = async () => {
-      try {
-        const res = await axios.get("/messages/" + currentChat?._id);
-        setMessages(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getMessages();
+    if (currentChat) {
+      const getMessages = async () => {
+        try {
+          const res = await axios.get("/messages/" + currentChat?._id);
+          setMessages(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getMessages();
+    }
   }, [currentChat]);
 
   const handleSubmit = async (e) => {
@@ -110,7 +112,7 @@ export default function Messenger() {
             <input placeholder="Search for friends" className="chatMenuInput" />
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} currentUser={user} />
+                <Conversation key={c._id} conversation={c} currentUser={user} />
               </div>
             ))}
           </div>
@@ -145,15 +147,17 @@ export default function Messenger() {
             )}
           </div>
         </div>
-        <div className="chatOnline">
-          <div className="chatOnlineWrapper">
-            <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={user._id}
-              setCurrentChat={setCurrentChat}
-            />
+        {
+          <div className="chatOnline">
+            {/* <div className="chatOnlineWrapper">
+              <ChatOnline
+                onlineUsers={onlineUsers}
+                currentId={user._id}
+                setCurrentChat={setCurrentChat}
+              />
+            </div> */}
           </div>
-        </div>
+        }
       </div>
     </>
   );
