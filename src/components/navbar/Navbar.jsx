@@ -18,7 +18,7 @@ const Navbar = () => {
     return () => {
       window.onscroll = null;
     };
-  });
+  }, []);
   return (
     <div className={isScrolled ? "movieNavbar scrolled" : "movieNavbar"}>
       <div className="container">

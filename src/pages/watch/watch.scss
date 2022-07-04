@@ -19,4 +19,74 @@
       height: 100%;
       object-fit: cover;
     }
-  }
+}
+
+#circular3dG{
+	position:relative;
+	width:200px;
+	height:200px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.circular3dG{
+	position:absolute;
+	background-color:#b03030;
+	width:56px;
+	height:56px;
+	border-radius:59px;
+	animation-name:bounce_circular3dG;
+	animation-duration:0.8s;
+	animation-iteration-count:infinite;
+	animation-direction:linear;
+}
+#circular3d_1G{
+	left:81px;
+	top:13px;
+	animation-delay:0.3s;
+}
+#circular3d_2G{
+	left:122px;
+	top:47px;
+	animation-delay:0.4s;
+}
+#circular3d_3G{
+	left:147px;
+	top:91px;
+	animation-delay:0.5s;
+}
+#circular3d_4G{
+	left:138px;
+	top:134px;
+	animation-delay:0.6s;
+}
+#circular3d_5G{
+	left:84px;
+	top:147px;
+	animation-delay:0.7s;
+}
+#circular3d_6G{
+	left:16px;
+	top:97px;
+	animation-delay:0.8s;
+}
+#circular3d_7G{
+	left:0px;
+	top:28px;
+	animation-delay:0.9s;
+}
+#circular3d_8G{
+	left:34px;
+	top:0px;
+	animation-delay:1s;
+}
+@keyframes bounce_circular3dG{
+	0%{
+		transform:scale(1)
+	}
+	100%{
+		transform:scale(.3)
+	}
+}

@@ -1,12 +1,9 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import "./subscribe.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
-import { subscribe } from "../../authContext/AuthActions";
 
 const Subscribe = () => {
   const navigate = useNavigate();
@@ -34,13 +31,6 @@ const Subscribe = () => {
             },
           }
         );
-        // console.log("res", res);
-        // const newUser = JSON.parse(localStorage.getItem("user"));
-        // newUser.subscribedTill = new Date(
-        //   new Date().getTime() + 30 * 24 * 60 * 60 * 1000
-        // );
-        // localStorage.setItem("user", JSON.stringify(newUser));
-        // subscribe(dispatch);
         navigate("/watch", { state: movie });
       } catch (err) {
         console.log("err", err);
@@ -50,17 +40,27 @@ const Subscribe = () => {
   };
   return (
     <>
-      <div className="container">
-        <h1>in order to continue you need to subscribe</h1>
-        <StripeCheckout
-          name="Movie Mania"
-          image="https://raw.githubusercontent.com/youssefwt/Movie-Mania/main/logo.png"
-          description="Subscribe for 1 month"
-          amount={10000}
-          token={onToken}
-          stripeKey="pk_test_51KhzxNEHwj20Yn6RZTOFDxaHP3m22XbpDuDywMsZthUWTOyKJtEvTpOxcAL7FfeC4uOlucTXQ39azat1SDexH3D200Amtv1A4z"
-          email="Movie_mania@mmania.com"
-        ></StripeCheckout>
+      <div className="subscribe_wrapper">
+        <img
+          className="bg-image"
+          src="https://img.freepik.com/free-vector/realistic-film-strip-with-popcorn-movie-ticket_1017-38430.jpg?t=st=1656950633~exp=1656951233~hmac=aeba901e92d63b333b42ab8af00079dbeb9fe5396c9b1b7fcdd6f305aa516500&w=1380"
+          alt=""
+        />
+        <h1 className="main_propmt">Your subscribtion has expired!</h1>
+        <div className="directions">
+          <h2 className="secondary_propmt">
+            In order to continue, you need to renew you subscribtion
+          </h2>
+          <StripeCheckout
+            name="Movie Mania"
+            image="https://raw.githubusercontent.com/youssefwt/Movie-Mania/main/logo.png"
+            description="Subscribe for 1 month"
+            amount={10000}
+            token={onToken}
+            stripeKey="pk_test_51KhzxNEHwj20Yn6RZTOFDxaHP3m22XbpDuDywMsZthUWTOyKJtEvTpOxcAL7FfeC4uOlucTXQ39azat1SDexH3D200Amtv1A4z"
+            email="Movie_mania@mmania.com"
+          ></StripeCheckout>
+        </div>
       </div>
     </>
   );

@@ -24,7 +24,7 @@ const App = () => {
       />
       <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
       <Route path="/subscribe" element={!user ? <Login /> : <Subscribe />} />
-      {user && (
+      {user ? (
         <>
           <Route
             path="/login"
@@ -37,6 +37,11 @@ const App = () => {
           <Route path="/profile/:userName" element={<Profile />} />
           <Route path="/messenger" element={<Messenger />} />
         </>
+      ) : (
+        <Route
+          path="/login"
+          element={!user ? <Login /> : <Navigate to="/" />}
+        />
       )}
     </Routes>
   );
