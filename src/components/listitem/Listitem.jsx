@@ -1,17 +1,55 @@
 import "./listitem.scss";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import AddIcon from "@mui/icons-material/Add";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../authContext/AuthContext";
 
 const Listitem = ({ index, item }) => {
   const [isHoverd, setIsHovered] = useState(false);
   //TODO: try implementing useLayoutEffect to fix hovering bug
   const [movie, setMovie] = useState({});
-  // console.log(movie);
+  const { user } = useContext(AuthContext);
+
+  const handleLike = () => {
+    try {
+      const likeMovie = async () => {
+        movie.likes.push(user._id);
+        const res = await axios.post(
+          `/movies/${movie._id}/like`,
+          {},
+          {
+            headers: {
+              token:
+                "Bearer " +
+                JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+          }
+        );
+        setMovie(res.data);
+      };
+      likeMovie();
+    } catch (err) {}
+  };
+
+  const handleDislike = () => {
+    try {
+      const likeMovie = async () => {
+        movie.likes.splice(movie.likes.indexOf(user._id), 1);
+        const res = await axios.delete(`/movies/${movie._id}/like`, {
+          headers: {
+            token:
+              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+          },
+        });
+        setMovie(res.data);
+      };
+      likeMovie();
+    } catch (err) {}
+  };
 
   useEffect(() => {
     const getMovie = async () => {
@@ -31,7 +69,7 @@ const Listitem = ({ index, item }) => {
   }, [item]);
 
   return (
-    <Link to="/watch" state={movie}>
+    <Link to="">
       <div
         className="movieListitem"
         style={{ left: isHoverd && index * 225 - 50 + index * 2.5 }}
@@ -45,10 +83,20 @@ const Listitem = ({ index, item }) => {
 
             <div className="movieInfo">
               <div className="movieIcons">
-                <PlayArrowIcon className="movieIcon" />
-                <AddIcon className="movieIcon" />
-                <ThumbUpOutlinedIcon className="movieIcon" />
-                <ThumbDownAltOutlinedIcon className="movieIcon" />
+                <Link to="/watch" state={movie}>
+                  <PlayArrowIcon className="movieIcon" />
+                </Link>
+                {movie &&
+                movie.likes.includes(
+                  JSON.parse(localStorage.getItem("user"))._id
+                ) ? (
+                  <ThumbUpIcon className="movieIcon" onClick={handleDislike} />
+                ) : (
+                  <ThumbUpOutlinedIcon
+                    className="movieIcon"
+                    onClick={handleLike}
+                  />
+                )}
               </div>
               <div className="movieInfoTop">
                 <span>{movie.duration}</span>
