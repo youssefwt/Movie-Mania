@@ -1,13 +1,13 @@
-import React from "react";
-import Feed from "../../components/feed/Feed";
+import { useContext } from "react";
+import SearchUser from "../../components/searchUser/SearchUser";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
-import "./NewsFeed.css";
+import "./Search.css";
 import { AuthContext } from "../../authContext/AuthContext";
-import { useContext } from "react";
 
-export default function NewsFeed() {
+export default function Search() {
   const { user } = useContext(AuthContext);
+
   return (
     <>
       <div class="container-fluid">
@@ -15,12 +15,12 @@ export default function NewsFeed() {
           <div class="col-12">
             <Topbar />
           </div>
-          <div className="NewsFeedContainer">
+          <div className="SearchContainer">
             <div class="col-2">
               <Sidebar user={user} />
             </div>
             <div class="col-9">
-              <Feed />
+              <SearchUser />
             </div>
           </div>
         </div>
