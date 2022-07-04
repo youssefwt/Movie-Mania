@@ -1,5 +1,5 @@
 import "./Profile.css";
-import { PermMedia, Cancel } from "@mui/icons-material";
+import { Cancel } from "@mui/icons-material";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import Sidebar from "../../components/sidebar/Sidebar";
