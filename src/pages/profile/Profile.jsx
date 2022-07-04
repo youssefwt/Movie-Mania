@@ -14,9 +14,9 @@ export default function Profile() {
   const [user, setUser] = useState({});
   const username = useParams().userName;
   const [file, setFile] = useState(null);
+  const [coverFile, setCoverFile] = useState(null);
   const { user: currentUser } = useContext(AuthContext);
-  console.log(user);
-  console.log(currentUser);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (file && user._id === currentUser._id) {
@@ -35,6 +35,31 @@ export default function Profile() {
           `http://localhost:8800/users/${user._id}`,
           {
             profilePicture: fileName,
+          },
+          {
+            headers: { token: `Bearer ${currentUser.accessToken}` },
+          }
+        );
+      } catch (err) {}
+    }
+  };
+  const coverSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (coverFile && user._id === currentUser._id) {
+      const coverData = new FormData();
+      const coverFileName = Date.now() + coverFile.name;
+      coverData.append("name", coverFileName);
+      coverData.append("file", coverFile);
+
+      try {
+        await axios.post("http://localhost:8800/api/upload", coverData, {
+          headers: { token: `Bearer ${currentUser.accessToken}` },
+        });
+        console.log(user);
+        await axios.patch(
+          `http://localhost:8800/users/${user._id}`,
+          {
+            coverPicture: coverFileName,
           },
           {
             headers: { token: `Bearer ${currentUser.accessToken}` },
@@ -64,15 +89,70 @@ export default function Profile() {
           <div className="profileRight">
             <div className="profileRightTop">
               <div className="profileCover">
-                <img
-                  className="profileCoverImg"
-                  src={
-                    user.coverPicture
-                      ? PF + user.coverPicture
-                      : PF + "person/noCover.png"
-                  }
-                  alt=""
-                />
+                {currentUser._id === user._id ? (
+                  <div>
+                    {coverFile && (
+                      <div>
+                        <img
+                          className="profileCoverImg"
+                          src={
+                            user.coverPicture
+                              ? PF + user.coverPicture
+                              : PF + "person/noCover.png"
+                          }
+                          alt=""
+                        />
+                        <Cancel
+                          className="CouldbeCancelImg"
+                          onClick={() => setCoverFile(null)}
+                        />
+                      </div>
+                    )}
+                    <form
+                      className="CouldBeProfileForm"
+                      onSubmit={coverSubmitHandler}
+                    >
+                      <div className="CouldBeProfileOptions">
+                        <label htmlFor="coverFile" className="shareOption">
+                          <img
+                            className="profileCoverImg"
+                            src={
+                              user.coverPicture
+                                ? PF + user.coverPicture
+                                : PF + "person/noCover.png"
+                            }
+                            alt=""
+                          />
+                          <input
+                            style={{ display: "none" }}
+                            type="file"
+                            id="coverFile"
+                            accept=".png,.jpeg,.jpg"
+                            onChange={(e) => setCoverFile(e.target.files[0])}
+                          />
+                        </label>
+                      </div>
+                      {coverFile && (
+                        <div className="DivOfButton">
+                          <button className="CouldBeSubmitButton">
+                            Change Picture
+                          </button>
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                ) : (
+                  <img
+                    className="profileCoverImg"
+                    src={
+                      user.coverPicture
+                        ? PF + user.coverPicture
+                        : PF + "person/noCover.png"
+                    }
+                    alt=""
+                  />
+                )}
+                {/* profile Image */}
                 {currentUser._id === user._id ? (
                   <div class="profileChangePictureContainer">
                     {file && (
