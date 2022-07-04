@@ -1,11 +1,5 @@
 import "./Share.css";
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  Cancel,
-} from "@mui/icons-material";
+import { PermMedia, Cancel } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
 import axios from "axios";
@@ -30,13 +24,21 @@ export default function Share() {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("/upload", data);
+        await axios.post("http://localhost:8800/api/upload", data, {
+          headers: { token: `Bearer ${user.accessToken}` },
+        });
       } catch (err) {}
     }
-    try {
-      await axios.post("/posts", newPost);
-      window.location.reload();
-    } catch (err) {}
+    if (!file && !desc.current.value.trim()) {
+      alert("Share something with your friends!");
+    } else {
+      try {
+        await axios.post("http://localhost:8800/posts", newPost, {
+          headers: { token: `Bearer ${user.accessToken}` },
+        });
+        window.location.reload();
+      } catch (err) {}
+    }
   };
 
   return (
@@ -53,7 +55,7 @@ export default function Share() {
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + user.username + "?"}
+            placeholder={"What's in your mind " + user.userName + "?"}
             className="shareInput"
             ref={desc}
           />
@@ -78,18 +80,6 @@ export default function Share() {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
-            <div className="shareOption">
-              <Label htmlColor="blue" className="shareIcon" />
-              <span className="shareOptionText">Tag</span>
-            </div>
-            <div className="shareOption">
-              <Room htmlColor="green" className="shareIcon" />
-              <span className="shareOptionText">Location</span>
-            </div>
-            <div className="shareOption">
-              <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
-              <span className="shareOptionText">Feelings</span>
-            </div>
           </div>
           <button className="shareButton" type="submit">
             Share

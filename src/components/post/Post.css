@@ -1,9 +1,11 @@
 .post {
-    width: 100%;
+    width: 80%;
     border-radius: 10px;
     -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
     box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    margin: 30px 0;
+  
+    margin: auto;
+    margin-top: 30px;
   }
   
   .postWrapper {
@@ -50,14 +52,15 @@
   }
   
   .postBottom{
-      display: flex;
+      display: flex; 
       align-items: center;
       justify-content: space-between;
-  }
+  } 
   
   .postBottomLeft{
       display: flex;
-      align-items: center;   
+      align-items: flex-start;  
+    
   }
   
   .likeIcon{

@@ -8,16 +8,14 @@ import axios from "axios";
 const Subscribe = () => {
   const navigate = useNavigate();
 
-  const [stripeToken, setStripeToken] = useState(null);
-
   const onToken = (token) => {
-    setStripeToken(token);
+    console.log(token);
     const makeRequest = async () => {
       try {
         const res = await axios.post(
           "/payment",
           {
-            source: stripeToken.id,
+            source: token.id,
             amount: 10000,
           },
           {
@@ -28,14 +26,14 @@ const Subscribe = () => {
             },
           }
         );
+        console.log("res", res);
         navigate(-1);
       } catch (err) {
-        console.log(err);
+        console.log("err", err);
       }
     };
     makeRequest();
   };
-  console.log(stripeToken);
   return (
     <>
       <div className="container">

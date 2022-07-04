@@ -3,14 +3,18 @@ import { AuthContext } from "../../authContext/AuthContext";
 import "./login.scss";
 import { login } from "../../authContext/apiCalls";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const { dispatch } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = ({ email, password }) => {
     login({ email, password }, dispatch);
   };
 
@@ -27,22 +31,27 @@ export default function Login() {
           />
         </div>
       </div>
-      <div className="container">
-        <form>
+      <div className="login_container">
+        <form onSubmit={handleSubmit(handleLogin)}>
           <h1>Sign In</h1>
           <input
-            type="email"
-            placeholder="Email or phone number"
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            {...register("email", {
+              required: "email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "invalid email address",
+              },
+            })}
           />
+          <span style={{ color: "#d26f6f" }}>{errors.email?.message}</span>
           <input
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password", { required: "password is required" })}
           />
-          <button className="loginButton" onClick={handleLogin}>
-            Sign In
-          </button>
+          <span style={{ color: "#d26f6f" }}>{errors.password?.message}</span>
+          <button className="loginButton">Sign In</button>
           <span>
             New to Netflix?{" "}
             <b

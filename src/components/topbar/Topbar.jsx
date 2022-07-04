@@ -1,12 +1,13 @@
 import "./Topbar.css";
-import { Search, Person, Chat, Notifications } from "@mui/icons-material";
+import { Search, Chat, Notifications } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);
+  const [notification, setNotification] = useState(0);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
@@ -29,23 +30,34 @@ export default function Topbar() {
       </div>
       <div className="topbarRight">
         <div className="tobparLinks">
-          <span className="topbarLink">HomePage</span>
-          <span className="topbarLink">Timeline</span>
+          <Link to={`/`} style={{ textDecoration: "none", color: "white" }}>
+            <span className="topbarLink">HomePage</span>
+          </Link>
+          <Link
+            to={`/newsfeed`}
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <span className="topbarLink">Timeline</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
-            <Person />
-            <span className="topbarIconBadge">1</span>
-          </div>
-
-          <div className="topbarIconItem">
             <Chat />
-            <span className="topbarIconBadge">2</span>
+
+            {notification > 0 ? (
+              <span className="topbarIconBadge">{notification}</span>
+            ) : (
+              <span></span>
+            )}
           </div>
 
           <div className="topbarIconItem">
             <Notifications />
-            <span className="topbarIconBadge">1</span>
+            {notification > 0 ? (
+              <span className="topbarIconBadge">{notification}</span>
+            ) : (
+              <span></span>
+            )}
           </div>
         </div>
         <Link to={`/profile/${user.userName}`}>
