@@ -22,8 +22,7 @@ export default function NewsFeed() {
               <Sidebar user={user} />
             </div>
             <div class="col-9">
-              {/* <Feed /> */}
-              <Search />
+              <Feed />
             </div>
           </div>
         </div>
