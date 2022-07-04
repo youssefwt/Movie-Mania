@@ -4,14 +4,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
+import FavouriteMovie from "../favouriteMovie/FavouriteMovie";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [likes, setLikes] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
+    setLikes(user?.likes);
   }, [currentUser, user]);
 
   const handleClick = async () => {
@@ -62,29 +65,18 @@ export default function Rightbar({ user }) {
             </button>
           </>
         )}
-        <h4 className="rightbarTitle">User information</h4>
+        <h4 className="rightbarTitle">Favourite Movies</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">{user.city}</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">{user.from}</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Relationship:</span>
-            <span className="rightbarInfoValue">
-              {user.relationship === 1
-                ? "Single"
-                : user.relationship === 1
-                ? "Married"
-                : "-"}
-            </span>
+            {user && user.likes && user.likes.length > 0 ? (
+              user.likes.map((movieId) => (
+                <FavouriteMovie key={movieId} movieId={movieId} />
+              ))
+            ) : (
+              <p>No favourite movies</p>
+            )}
           </div>
         </div>
-        <h4 className="rightbarTitle">User friends</h4>
-        <div className="rightbarFollowings"></div>
       </>
     );
   };

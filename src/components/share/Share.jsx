@@ -30,7 +30,7 @@ export default function Share() {
       } catch (err) {}
     }
     if (!file && !desc.current.value.trim()) {
-      alert("Please fill all fields");
+      alert("Share something with your friends!");
     } else {
       try {
         await axios.post("http://localhost:8800/posts", newPost, {

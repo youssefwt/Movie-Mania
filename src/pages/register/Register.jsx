@@ -92,7 +92,7 @@ const Register = () => {
           </button>
         </div>
       </div>
-      <div className="container">
+      <div className="register_container">
         <h1>Unlimited movies, TV shows, and more.</h1>
         <h2>Watch anywhere. Cancel anytime.</h2>
         <p>

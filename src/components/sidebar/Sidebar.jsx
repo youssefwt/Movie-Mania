@@ -20,6 +20,7 @@ export default function Sidebar({ user }) {
     //get friends
     const getFriends = async () => {
       try {
+        console.log(currentUser._id);
         const followersList = await axios.get(
           `http://localhost:8800/users/friends/${currentUser._id}`,
           {
@@ -92,17 +93,25 @@ export default function Sidebar({ user }) {
           <ul className="sidebarFriendLList">
             {followers.map((u) => (
               <div key={u._id}>
-                <CloseFriend user={u} />
-                <div className="sidebarFollow">
-                  <button
-                    className="sidebarFollowButton"
-                    onClick={() => {
-                      handleClick(u);
-                    }}
-                  >
-                    {followed ? "Unfollow" : "Follow"}
-                    {followed ? <Remove /> : <Add />}
-                  </button>
+                <div class="row">
+                  <div className="sidebarFollowContainer">
+                    <div class="col-4  col-sm-8">
+                      <CloseFriend user={u} />
+                    </div>
+                    <div class="col-8 col-sm-8">
+                      <div className="sidebarFollow">
+                        <button
+                          className="sidebarFollowButton"
+                          onClick={() => {
+                            handleClick(u);
+                          }}
+                        >
+                          {followed ? "Unfollow" : "Follow"}
+                          {followed ? <Remove /> : <Add />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
