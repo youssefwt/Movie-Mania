@@ -4,10 +4,9 @@ import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../authContext/AuthContext";
 import axios from "axios";
-
 import { useParams } from "react-router";
 
 export default function Profile() {
@@ -15,7 +14,9 @@ export default function Profile() {
   const [user, setUser] = useState({});
   const username = useParams().userName;
   const [file, setFile] = useState(null);
-
+  const { user: currentUser } = useContext(AuthContext);
+  console.log(user);
+  console.log(currentUser);
   const submitHandler = async (e) => {
     e.preventDefault();
     if (file) {
@@ -23,11 +24,22 @@ export default function Profile() {
       const fileName = Date.now() + file.name;
       data.append("name", fileName);
       data.append("file", file);
-      const image = fileName;
+
       try {
+        console.log(user);
         await axios.post("http://localhost:8800/api/upload", data, {
-          headers: { token: `Bearer ${user.accessToken}` },
+          headers: { token: `Bearer ${currentUser.accessToken}` },
         });
+        console.log(user);
+        await axios.patch(
+          `http://localhost:8800/users/${user._id}`,
+          {
+            profilePicture: fileName,
+          },
+          {
+            headers: { token: `Bearer ${currentUser.accessToken}` },
+          }
+        );
       } catch (err) {}
     }
   };
@@ -61,50 +73,65 @@ export default function Profile() {
                   }
                   alt=""
                 />
-                <div class="profileChangePictureContainer">
-                  {file && (
-                    <div className="couldBeProfileImgContainer">
-                      <img
-                        className="CouldBeProfileImg"
-                        src={URL.createObjectURL(file)}
-                        alt=""
-                      />
-                      <Cancel
-                        className="CouldbeCancelImg"
-                        onClick={() => setFile(null)}
-                      />
-                    </div>
-                  )}
-                  <form className="CouldBeProfileForm" onSubmit={submitHandler}>
-                    <div className="CouldBeProfileOptions">
-                      <label htmlFor="file" className="shareOption">
+                {currentUser._id === user._id ? (
+                  <div class="profileChangePictureContainer">
+                    {file && (
+                      <div className="couldBeProfileImgContainer">
                         <img
-                          className="profileUserImg"
-                          src={
-                            user.profilePicture
-                              ? PF + user.profilePicture
-                              : PF + "person/noAvatar.png"
-                          }
+                          className="CouldBeProfileImg"
+                          src={URL.createObjectURL(file)}
                           alt=""
                         />
-                        <input
-                          style={{ display: "none" }}
-                          type="file"
-                          id="file"
-                          accept=".png,.jpeg,.jpg"
-                          onChange={(e) => setFile(e.target.files[0])}
+                        <Cancel
+                          className="CouldbeCancelImg"
+                          onClick={() => setFile(null)}
                         />
-                      </label>
-                    </div>
-                    {file && (
-                      <div className="DivOfButton">
-                        <button className="CouldBeSubmitButton">
-                          Change Picture
-                        </button>
                       </div>
                     )}
-                  </form>
-                </div>
+                    <form
+                      className="CouldBeProfileForm"
+                      onSubmit={submitHandler}
+                    >
+                      <div className="CouldBeProfileOptions">
+                        <label htmlFor="file" className="shareOption">
+                          <img
+                            className="profileUserImg"
+                            src={
+                              user.profilePicture
+                                ? PF + user.profilePicture
+                                : PF + "person/noAvatar.png"
+                            }
+                            alt=""
+                          />
+                          <input
+                            style={{ display: "none" }}
+                            type="file"
+                            id="file"
+                            accept=".png,.jpeg,.jpg"
+                            onChange={(e) => setFile(e.target.files[0])}
+                          />
+                        </label>
+                      </div>
+                      {file && (
+                        <div className="DivOfButton">
+                          <button className="CouldBeSubmitButton">
+                            Change Picture
+                          </button>
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                ) : (
+                  <img
+                    className="profileUserImg"
+                    src={
+                      user.profilePicture
+                        ? PF + user.profilePicture
+                        : PF + "person/noAvatar.png"
+                    }
+                    alt=""
+                  />
+                )}
               </div>
               <div className="profileInfo">
                 <h4 className="profileInfoName">{user.userName}</h4>
