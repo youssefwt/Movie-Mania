@@ -9,9 +9,11 @@ export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(false);
+
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
   }, [currentUser, user]);
+
   const handleClick = async () => {
     try {
       if (followed) {
@@ -37,14 +39,28 @@ export default function Rightbar({ user }) {
     } catch (err) {}
   };
 
+  const handleMessage = async () => {
+    try {
+      await axios.post(`/conversations`, {
+        senderId: currentUser._id,
+        receiverId: user._id,
+      });
+    } catch (err) {}
+  };
+
   const ProfileRightbar = () => {
     return (
       <>
         {user.userName !== currentUser.userName && (
-          <button className="rightbarFollowButton" onClick={handleClick}>
-            {followed ? "Unfollow" : "Follow"}
-            {followed ? <Remove /> : <Add />}
-          </button>
+          <>
+            <button className="rightbarFollowButton" onClick={handleClick}>
+              {followed ? "Unfollow" : "Follow"}
+              {followed ? <Remove /> : <Add />}
+            </button>
+            <button className="rightbarMessageButton" onClick={handleMessage}>
+              Message
+            </button>
+          </>
         )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
