@@ -6,6 +6,7 @@ import Topbar from "../../components/topbar/Topbar";
 import "./NewsFeed.css";
 import { AuthContext } from "../../authContext/AuthContext";
 import { useContext, useEffect } from "react";
+import Search from "../../components/search/Search";
 
 export default function NewsFeed() {
   const { user } = useContext(AuthContext);
@@ -21,7 +22,8 @@ export default function NewsFeed() {
               <Sidebar user={user} />
             </div>
             <div class="col-9">
-              <Feed />
+              {/* <Feed /> */}
+              <Search />
             </div>
           </div>
         </div>

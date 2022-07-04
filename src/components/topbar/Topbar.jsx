@@ -1,5 +1,5 @@
 import "./Topbar.css";
-import { Search, Chat, Notifications } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);
-  const [notification, setNotification] = useState(0);
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
@@ -29,7 +29,8 @@ export default function Topbar() {
         </div>
       </div>
       <div className="topbarRight">
-        <div className="tobparLinks">
+        <div className="tobparLinks"></div>
+        <div className="topbarIcons">
           <Link to={`/`} style={{ textDecoration: "none", color: "white" }}>
             <span className="topbarLink">HomePage</span>
           </Link>
@@ -39,26 +40,6 @@ export default function Topbar() {
           >
             <span className="topbarLink">Timeline</span>
           </Link>
-        </div>
-        <div className="topbarIcons">
-          <div className="topbarIconItem">
-            <Chat />
-
-            {notification > 0 ? (
-              <span className="topbarIconBadge">{notification}</span>
-            ) : (
-              <span></span>
-            )}
-          </div>
-
-          <div className="topbarIconItem">
-            <Notifications />
-            {notification > 0 ? (
-              <span className="topbarIconBadge">{notification}</span>
-            ) : (
-              <span></span>
-            )}
-          </div>
         </div>
         <Link to={`/profile/${user.userName}`}>
           <img
