@@ -19,6 +19,7 @@ export default function Messenger() {
   const socket = useRef();
   const { user } = useContext(AuthContext);
   const scrollRef = useRef();
+  const [search, setSearch] = useState(null);
 
   const { state } = useLocation();
   const recievingUser = state?.user;
@@ -68,7 +69,7 @@ export default function Messenger() {
       }
     };
     getConversations();
-  }, [user._id]);
+  }, [user._id, search]);
 
   useEffect(() => {
     if (currentChat) {
@@ -115,6 +116,7 @@ export default function Messenger() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  console.log(search);
   return (
     <>
       <Topbar />
@@ -122,10 +124,24 @@ export default function Messenger() {
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
+            <input
+              placeholder="Search for friends"
+              className="chatMenuInput"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              style={{
+                padding: "5px",
+              }}
+            />
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
-                <Conversation key={c._id} conversation={c} currentUser={user} />
+                <Conversation
+                  search={search}
+                  key={c._id}
+                  conversation={c}
+                  currentUser={user}
+                />
               </div>
             ))}
           </div>

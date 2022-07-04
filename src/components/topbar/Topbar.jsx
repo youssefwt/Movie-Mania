@@ -1,14 +1,22 @@
 import "./Topbar.css";
 import { Search } from "@mui/icons-material";
-
+import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const search = useRef();
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (search.current.value.length > 0) {
+      navigate(`/search?q=${search.current.value}`);
+    }
+  };
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -18,14 +26,14 @@ export default function Topbar() {
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
-          <div className="searchIcon">
-            <Search />
-          </div>
-
           <input
-            placeholder="Search for post,frinde or video"
+            placeholder="Search for friends"
             className="searchInput"
+            ref={search}
           />
+          <div className="searchIcon">
+            <Search onClick={handleSearch} style={{ cursor: "pointer" }} />
+          </div>
         </div>
       </div>
       <div className="topbarRight">

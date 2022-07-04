@@ -52,7 +52,6 @@ export default function Sidebar({ user }) {
         );
         dispatch({ type: "FOLLOW", payload: user._id });
       }
-      setFollowed(!followed);
     } catch (err) {}
   };
 

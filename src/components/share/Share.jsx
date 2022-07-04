@@ -22,7 +22,6 @@ export default function Share() {
       data.append("name", fileName);
       data.append("file", file);
       newPost.img = fileName;
-      console.log(newPost);
       try {
         await axios.post("http://localhost:8800/api/upload", data, {
           headers: { token: `Bearer ${user.accessToken}` },
