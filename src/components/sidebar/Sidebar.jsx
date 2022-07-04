@@ -1,10 +1,5 @@
 import "./Sidebar.css";
-import {
-  Chat,
-  Group,
-  PlayCircleFilledOutlined,
-  RssFeed,
-} from "@mui/icons-material";
+import { Chat, Group, PlayCircleFilledOutlined } from "@mui/icons-material";
 import { Add, Remove } from "@mui/icons-material";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
@@ -65,10 +60,6 @@ export default function Sidebar({ user }) {
     <div className="sidebar">
       <div className="sidebarWrapper ">
         <ul className="sidebarList">
-          <li className="sidebarListItem">
-            <RssFeed className="sidebarIcon" />
-            <span className="sidebarListItemText">Feed</span>
-          </li>
           <li className="sidebarListItem">
             <Chat className="sidebarIcon" />
             <Link
