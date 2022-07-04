@@ -17,7 +17,7 @@ const Listitem = ({ index, item }) => {
   const handleLike = () => {
     try {
       const likeMovie = async () => {
-        movie.likes.push(user._id);
+        // if (movie) movie.likes.push(user._id);
         const res = await axios.post(
           `/movies/${movie._id}/like`,
           {},
@@ -37,8 +37,8 @@ const Listitem = ({ index, item }) => {
 
   const handleDislike = () => {
     try {
-      const likeMovie = async () => {
-        movie.likes.splice(movie.likes.indexOf(user._id), 1);
+      const dislikeMovie = async () => {
+        // if (movie.likes) movie.likes.splice(movie.likes.indexOf(user._id), 1);
         const res = await axios.delete(`/movies/${movie._id}/like`, {
           headers: {
             token:
@@ -47,7 +47,7 @@ const Listitem = ({ index, item }) => {
         });
         setMovie(res.data);
       };
-      likeMovie();
+      dislikeMovie();
     } catch (err) {}
   };
 
