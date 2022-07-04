@@ -49,15 +49,57 @@
   display: flex;
 }
 
-.couldBeProfileImgContainer {
-  width: 20%;
+
+
+/*  */
+
+.profileChangePictureContainer {
+  width: 50%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+background-color: #fff;
   margin: auto;
+  margin-top: 50px;
+  z-index: 99;
+
 }
 
-.CouldBeProfileForm {
-  width: 100%;
+.couldBeProfileImgContainer{
+
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+
+  justify-content: space-around;
+
+
+
+
+}
+.CouldbeCancelImg{
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px 5px ;
+ 
+}
+.CouldBeProfileImg{
+  width: 300px;
+  height: 200px;
+  margin-top: 20px;
+}
+
+
+.DivOfButton{
+ 
+  text-align: center;
+}
+.CouldBeSubmitButton{
+  background-color: green;
+  border: none;
+  padding: 10px 5px;
+  border-radius: 10px;
+  color: white;
+  margin: 20px 0;
 }

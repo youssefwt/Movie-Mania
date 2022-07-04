@@ -61,48 +61,50 @@ export default function Profile() {
                   }
                   alt=""
                 />
-                {file && (
-                  <div className="couldBeProfileImgContainer">
-                    <img
-                      className="CouldBeProfileImg"
-                      src={URL.createObjectURL(file)}
-                      alt=""
-                    />
-                    <Cancel
-                      className="CouldbeCancelImg"
-                      onClick={() => setFile(null)}
-                    />
-                  </div>
-                )}
-                <form className="CouldBeProfileForm" onSubmit={submitHandler}>
-                  <div className="CouldBeProfileOptions">
-                    <label htmlFor="file" className="shareOption">
+                <div class="profileChangePictureContainer">
+                  {file && (
+                    <div className="couldBeProfileImgContainer">
                       <img
-                        className="profileUserImg"
-                        src={
-                          user.profilePicture
-                            ? PF + user.profilePicture
-                            : PF + "person/noAvatar.png"
-                        }
+                        className="CouldBeProfileImg"
+                        src={URL.createObjectURL(file)}
                         alt=""
                       />
-                      <input
-                        style={{ display: "none" }}
-                        type="file"
-                        id="file"
-                        accept=".png,.jpeg,.jpg"
-                        onChange={(e) => setFile(e.target.files[0])}
+                      <Cancel
+                        className="CouldbeCancelImg"
+                        onClick={() => setFile(null)}
                       />
-                    </label>
-                  </div>
-                  {file && (
-                    <div className="DivOfButton">
-                      <button className="CouldBeSubmitButton">
-                        Change Picture
-                      </button>
                     </div>
                   )}
-                </form>
+                  <form className="CouldBeProfileForm" onSubmit={submitHandler}>
+                    <div className="CouldBeProfileOptions">
+                      <label htmlFor="file" className="shareOption">
+                        <img
+                          className="profileUserImg"
+                          src={
+                            user.profilePicture
+                              ? PF + user.profilePicture
+                              : PF + "person/noAvatar.png"
+                          }
+                          alt=""
+                        />
+                        <input
+                          style={{ display: "none" }}
+                          type="file"
+                          id="file"
+                          accept=".png,.jpeg,.jpg"
+                          onChange={(e) => setFile(e.target.files[0])}
+                        />
+                      </label>
+                    </div>
+                    {file && (
+                      <div className="DivOfButton">
+                        <button className="CouldBeSubmitButton">
+                          Change Picture
+                        </button>
+                      </div>
+                    )}
+                  </form>
+                </div>
               </div>
               <div className="profileInfo">
                 <h4 className="profileInfoName">{user.userName}</h4>
