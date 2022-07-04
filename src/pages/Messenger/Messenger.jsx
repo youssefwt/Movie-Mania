@@ -7,6 +7,7 @@ import ChatOnline from "../../components/chatOnline/ChatOnline";
 import { AuthContext } from "../../authContext/AuthContext";
 import { io } from "socket.io-client";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
@@ -18,6 +19,9 @@ export default function Messenger() {
   const socket = useRef();
   const { user } = useContext(AuthContext);
   const scrollRef = useRef();
+
+  const { state } = useLocation();
+  const recievingUser = state?.user;
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -50,6 +54,15 @@ export default function Messenger() {
       try {
         const res = await axios.get("/conversations/" + user._id);
         setConversations(res.data);
+
+        if (recievingUser) {
+          const conversation = res.data.find((c) =>
+            c.members.includes(recievingUser._id)
+          );
+          setCurrentChat(conversation);
+        } else {
+          // conversations.length > 0 && setCurrentChat(conversations[0]);
+        }
       } catch (err) {
         console.log(err);
       }

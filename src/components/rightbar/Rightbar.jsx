@@ -1,7 +1,7 @@
 import "./Rightbar.css";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
 import FavouriteMovie from "../favouriteMovie/FavouriteMovie";
@@ -11,6 +11,7 @@ export default function Rightbar({ user }) {
   const [likes, setLikes] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
@@ -48,7 +49,11 @@ export default function Rightbar({ user }) {
         senderId: currentUser._id,
         receiverId: user._id,
       });
-    } catch (err) {}
+
+      navigate("/messenger", { state: { user } });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const ProfileRightbar = () => {
