@@ -83,7 +83,7 @@ const Listitem = ({ index, item }) => {
 
             <div className="movieInfo">
               <div className="movieIcons">
-                <Link to="/watch" state={movie}>
+                <Link to="/watch" state={movie && movie}>
                   <PlayArrowIcon className="movieIcon" />
                 </Link>
                 {movie &&
