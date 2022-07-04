@@ -15,7 +15,7 @@ export default function Profile() {
   const username = useParams().userName;
   const [file, setFile] = useState(null);
   const [coverFile, setCoverFile] = useState(null);
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,13 +24,10 @@ export default function Profile() {
       const fileName = Date.now() + file.name;
       data.append("name", fileName);
       data.append("file", file);
-
       try {
-        console.log(user);
         await axios.post("http://localhost:8800/api/upload", data, {
           headers: { token: `Bearer ${currentUser.accessToken}` },
         });
-        console.log(user);
         await axios.patch(
           `http://localhost:8800/users/${user._id}`,
           {
@@ -40,6 +37,8 @@ export default function Profile() {
             headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
+        dispatch({ type: "CHANGEPP", payload: fileName });
+        window.location.reload();
       } catch (err) {}
     }
   };
@@ -50,7 +49,6 @@ export default function Profile() {
       const coverFileName = Date.now() + coverFile.name;
       coverData.append("name", coverFileName);
       coverData.append("file", coverFile);
-
       try {
         await axios.post("http://localhost:8800/api/upload", coverData, {
           headers: { token: `Bearer ${currentUser.accessToken}` },
@@ -65,6 +63,8 @@ export default function Profile() {
             headers: { token: `Bearer ${currentUser.accessToken}` },
           }
         );
+        dispatch({ type: "CHANGECP", payload: coverFileName });
+        window.location.reload();
       } catch (err) {}
     }
   };
@@ -78,6 +78,7 @@ export default function Profile() {
     };
     fetchUser();
   }, [username, user.accessToken]);
+
   return (
     <>
       <Topbar />
@@ -88,18 +89,14 @@ export default function Profile() {
           </div>
           <div className="profileRight">
             <div className="profileRightTop">
-              <div className="profileCover">
+              <div className="AllContainer">
                 {currentUser._id === user._id ? (
-                  <div>
+                  <div className="CoverChangePictureContainer">
                     {coverFile && (
-                      <div>
+                      <div className="couldBeCoverImgContainer">
                         <img
-                          className="profileCoverImg"
-                          src={
-                            user.coverPicture
-                              ? PF + user.coverPicture
-                              : PF + "person/noCover.png"
-                          }
+                          className="CouldBeCoverImg"
+                          src={URL.createObjectURL(coverFile)}
                           alt=""
                         />
                         <Cancel
@@ -109,10 +106,10 @@ export default function Profile() {
                       </div>
                     )}
                     <form
-                      className="CouldBeProfileForm"
+                      className="CouldBeCoverForm"
                       onSubmit={coverSubmitHandler}
                     >
-                      <div className="CouldBeProfileOptions">
+                      <div className="CouldBeCoverOptions">
                         <label htmlFor="coverFile" className="shareOption">
                           <img
                             className="profileCoverImg"
