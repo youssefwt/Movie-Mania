@@ -15,7 +15,7 @@ const Home = ({ type }) => {
       try {
         const res = await axios.get(
           `lists${type ? "?type=" + type : ""}${
-            genre ? "&genre=" + genre.toLowerCase() : ""
+            type && genre ? "&genre=" + genre.toLowerCase() : ""
           }`,
           {
             headers: {
