@@ -100,7 +100,7 @@ export default function Profile() {
                           alt=""
                         />
                         <Cancel
-                          className="CouldbeCancelImg"
+                          className="CouldbeCancelCoverImg"
                           onClick={() => setCoverFile(null)}
                         />
                       </div>
@@ -131,7 +131,7 @@ export default function Profile() {
                       </div>
                       {coverFile && (
                         <div className="DivOfButton">
-                          <button className="CouldBeSubmitButton">
+                          <button className="CouldBeCoverSubmitButton">
                             Change Picture
                           </button>
                         </div>
