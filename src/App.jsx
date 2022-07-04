@@ -29,7 +29,7 @@ const App = () => {
             path="/login"
             element={!user ? <Login /> : <Navigate to="/" />}
           />
-          <Route path="/movies" element={<Home type="movies" />} />
+          <Route path="/movies" element={<Home type="movie" />} />
           <Route path="/series" element={<Home type="series" />} />
           <Route path="/watch" element={<Watch />} />
           <Route path="/newsfeed" element={<NewsFeed />} />
