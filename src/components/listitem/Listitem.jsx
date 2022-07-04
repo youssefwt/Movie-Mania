@@ -88,7 +88,7 @@ const Listitem = ({ index, item }) => {
                     <PlayArrowIcon className="movieIcon" />
                   </Link>
                 )}
-                {movie &&
+                {movie.likes &&
                 movie.likes.includes(
                   JSON.parse(localStorage.getItem("user"))._id
                 ) ? (
