@@ -6,9 +6,17 @@ import "./movieNavbar.scss";
 import { logout } from "../../authContext/AuthActions";
 import { AuthContext } from "../../authContext/AuthContext";
 
-const Navbar = () => {
+const Navbar = ({ setIsSearching }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { dispatch } = useContext(AuthContext);
+
+  const handleSearching = (e) => {
+    if (e.target.value) {
+      setIsSearching(e.target.value);
+    } else {
+      setIsSearching(e.target.value);
+    }
+  };
 
   useEffect(() => {
     window.onscroll = () => {
@@ -45,7 +53,15 @@ const Navbar = () => {
           <span>My List</span>
         </div>
         <div className="right">
-          <Search className="icon" />
+          <div className="search_container">
+            <Search className="icon" />
+            <input
+              type="text"
+              placeholder="search"
+              className="title_search"
+              onChange={handleSearching}
+            />
+          </div>
           <span>KIDS</span>
           <NotificationsIcon className="icon" />
           <img

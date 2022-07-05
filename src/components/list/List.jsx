@@ -4,7 +4,7 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import Listitem from "../listitem/Listitem";
 import { useRef, useState } from "react";
 
-const List = ({ list }) => {
+const List = ({ list, isSearching }) => {
   const [slideNum, setSlideNum] = useState(0);
   const [isMoved, setIsMoved] = useState(false);
 
@@ -28,22 +28,29 @@ const List = ({ list }) => {
 
   return (
     <div className="list">
-      <span className="listTitle">{list.title}</span>
-      <div className="wrapper">
-        <ArrowBackIosOutlinedIcon
-          className="sliderArrow left"
-          onClick={() => handleClick("left")}
-          style={{ display: !isMoved && "none" }}
-        />
-        <div className="container" ref={listRef}>
-          {list.content.map((item, i) => (
-            <Listitem key={i} index={i} item={item} />
-          ))}
+      <div>
+        {!isSearching ? (
+          <span className="listTitle">{list.title}</span>
+        ) : (
+          <span className="listTitle">Searching For...</span>
+        )}
+        <div className="wrapper">
+          <ArrowBackIosOutlinedIcon
+            className="sliderArrow left"
+            onClick={() => handleClick("left")}
+            style={{ display: !isMoved && "none" }}
+          />
+          <div className="container" ref={listRef}>
+            {list.content &&
+              list.content.map((item, i) => (
+                <Listitem key={i} index={i} item={item} />
+              ))}
+          </div>
+          <ArrowForwardIosOutlinedIcon
+            className="sliderArrow right"
+            onClick={() => handleClick("right")}
+          />
         </div>
-        <ArrowForwardIosOutlinedIcon
-          className="sliderArrow right"
-          onClick={() => handleClick("right")}
-        />
       </div>
     </div>
   );

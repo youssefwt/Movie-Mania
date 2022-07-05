@@ -5,14 +5,11 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../authContext/AuthContext";
 
-const Listitem = ({ index, item }) => {
+const Listitem = ({ index, item, isSearching }) => {
   const [isHoverd, setIsHovered] = useState(false);
   //TODO: try implementing useLayoutEffect to fix hovering bug
   const [movie, setMovie] = useState({});
-  const { user } = useContext(AuthContext);
 
   const handleLike = () => {
     try {

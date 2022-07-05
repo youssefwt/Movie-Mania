@@ -6,11 +6,14 @@ import "./home.scss";
 import axios from "axios";
 
 const Home = ({ type }) => {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState(null);
   const [genre, setGenre] = useState(null);
+  const [isSearching, setIsSearching] = useState(null);
+  const [searchingList, setSearchingList] = useState(null);
+
+  console.log(isSearching);
 
   useEffect(() => {
-    console.log(genre);
     const getRandomLists = async () => {
       try {
         const res = await axios.get(
@@ -34,13 +37,46 @@ const Home = ({ type }) => {
     getRandomLists();
   }, [genre, type]);
 
+  useEffect(() => {
+    if (isSearching) {
+      const getSearchingList = async () => {
+        try {
+          const res = await axios.post(
+            "/movies/search",
+            {
+              search: isSearching,
+            },
+            {
+              headers: {
+                token:
+                  "Bearer " +
+                  JSON.parse(localStorage.getItem("user")).accessToken,
+              },
+            }
+          );
+
+          setSearchingList({
+            title: "Searching For ...",
+            content: res.data.map((item) => item._id).slice(0, 10),
+          });
+          console.log(res.data.map((item) => item._id));
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getSearchingList();
+    }
+  }, [isSearching, genre, type]);
+
   return (
     <div className="home">
-      <Navbar />
+      <Navbar setIsSearching={setIsSearching} />
       <Featured type={type} setGenre={setGenre} />
-      {lists.map((list) => (
-        <List key={list._id} list={list} />
-      ))}
+      {isSearching && searchingList && (
+        <List isSearching={isSearching} list={searchingList} />
+      )}
+      {lists && lists.map((list) => <List key={list._id} list={list} />)}
     </div>
   );
 };
