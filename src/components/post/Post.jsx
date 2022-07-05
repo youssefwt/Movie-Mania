@@ -4,11 +4,13 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
-import { MoreVert } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function Post({ post }) {
+  const MySwal = withReactContent(Swal);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
@@ -31,14 +33,28 @@ export default function Post({ post }) {
   }, [post.userId, user.accessToken]);
 
   const deleteHandler = async () => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
-      try {
-        await axios.delete(`http://localhost:8800/posts/${post._id}`, {
-          headers: { token: `Bearer ${currentUser.accessToken}` },
-        });
-        window.location.reload();
-      } catch (err) {}
-    }
+    MySwal.fire({
+      title: "Are you sure you want to delete the post?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#007006",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MySwal.fire("Deleted!", "Your post has been deleted.", "success");
+        try {
+          axios
+            .delete(`http://localhost:8800/posts/${post._id}`, {
+              headers: { token: `Bearer ${currentUser.accessToken}` },
+            })
+            .then(() => {
+              window.location.reload();
+            });
+        } catch (err) {}
+      }
+    });
   };
 
   const likeHandler = async () => {

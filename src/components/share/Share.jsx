@@ -3,8 +3,11 @@ import { PermMedia, Cancel } from "@mui/icons-material";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
 import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function Share() {
+  const MySwal = withReactContent(Swal);
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
@@ -29,7 +32,11 @@ export default function Share() {
       } catch (err) {}
     }
     if (!file && !desc.current.value.trim()) {
-      alert("Share something with your friends!");
+      MySwal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Share something with your friends!",
+      });
     } else {
       try {
         await axios.post("http://localhost:8800/posts", newPost, {
