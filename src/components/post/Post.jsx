@@ -9,7 +9,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-export default function Post({ post }) {
+export default function Post({ post, deleteHandler }) {
   const MySwal = withReactContent(Swal);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
@@ -31,31 +31,6 @@ export default function Post({ post }) {
     };
     fetchUsers();
   }, [post.userId, user.accessToken]);
-
-  const deleteHandler = async () => {
-    MySwal.fire({
-      title: "Are you sure you want to delete the post?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#007006",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        MySwal.fire("Deleted!", "Your post has been deleted.", "success");
-        try {
-          axios
-            .delete(`http://localhost:8800/posts/${post._id}`, {
-              headers: { token: `Bearer ${currentUser.accessToken}` },
-            })
-            .then(() => {
-              window.location.reload();
-            });
-        } catch (err) {}
-      }
-    });
-  };
 
   const likeHandler = async () => {
     try {
@@ -94,7 +69,13 @@ export default function Post({ post }) {
           </div>
           {currentUser._id === post.userId && (
             <div className="postTopRight">
-              <Button variant="outlined" color="error" onClick={deleteHandler}>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => {
+                  deleteHandler(post._id, currentUser.accessToken);
+                }}
+              >
                 <ClearIcon />
               </Button>
             </div>
