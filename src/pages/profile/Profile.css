@@ -21,7 +21,7 @@
   height: 250px;
   object-fit: cover;
   position: absolute;
-  top: 0px;
+  top: 0;
   margin: auto;
 }
 
@@ -36,6 +36,7 @@
   margin: auto;
   top: 150px;
   border: 3px solid white;
+ 
 }
 
 .profileInfo {
@@ -57,18 +58,9 @@
   display: flex;
 }
 
-/*  */
+/* cover picture */
 
-.profileChangePictureContainer {
-  width: 50%;
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-  background-color: #fff;
-  margin: auto;
-  margin-top: 50px;
-  z-index: 99;
-}
+
 
 .CoverChangePictureContainer {
   border-radius: 10px;
@@ -83,7 +75,7 @@
   display: flex;
   position: relative;
   justify-content: space-around;
-  z-index: 120;
+
 }
 
 .CouldBeCoverImg {
@@ -92,18 +84,60 @@
   z-index: 99;
 }
 
-.couldBeProfileImgContainer {
-  display: flex;
-  position: relative;
-  justify-content: space-around;
-}
 
-.CouldbeCancelImg {
+.CouldbeCancelCoverImg {
   position: absolute;
   top: 0;
   right: 0;
   margin: 5px 5px;
   z-index: 9000;
+}
+
+
+.CouldBeCoverSubmitButton {
+  background-color: green;
+  border: none;
+  padding: 15px 15px;
+  border-radius: 10px;
+  color: white;
+  margin: 50px 0px 20px 1%;
+}
+
+.CouldbeCancelImg,.CouldbeCancelCoverImg{
+  position: absolute;
+  top: 20px;
+  right: 0;
+  margin: 5px 5px ;
+}
+
+/* profile image */
+
+
+
+.profileChangePictureContainer {
+  width: 50%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  background-color: #fff;
+  margin: auto;
+  margin-top: 300px;
+  z-index: 99;
+  
+
+}
+
+.couldBeProfileImgContainer{
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+
+}
+.CouldbeCancelImg{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px 5px ;
 }
 .CouldBeProfileImg {
   width: 300px;
@@ -111,15 +145,17 @@
   margin-top: 20px;
 }
 
-.DivOfButton {
+
+.DivOfButton{
   text-align: center;
 }
 
-.CouldBeSubmitButton {
+
+.CouldBeSubmitButton{
   background-color: green;
   border: none;
-  padding: 10px 5px;
+   padding: 15px 15px;
   border-radius: 10px;
   color: white;
-  margin: 50px 400px 0px 0px;
+  margin: 20px 0;
 }
