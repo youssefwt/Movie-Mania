@@ -6,11 +6,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../authContext/AuthContext";
 import { Button } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 export default function Post({ post, deleteHandler }) {
-  const MySwal = withReactContent(Swal);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
